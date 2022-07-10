@@ -6,34 +6,26 @@ import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import { Reading, InProgressReading } from './types';
 import useReadings from './lib/reading-api';
+import PastReads from './PastReads';
+import formatTime from './lib/format-time';
 
 dayjs.extend(relativeTime);
-const formatTime = (elasped:number) => {
-  const rounded = Math.floor(elasped);
-  const seconds = rounded % 60;
-  const minutes = (rounded - seconds) / 60;
-  return `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-};
-const computeSpeed = (reading:Reading) => {
-  const pages = reading.endPage - reading.startPage;
-  const timeInMs = reading.endTime - reading.startTime;
-  const timeInMin = timeInMs / 1000 / 60;
-  return (timeInMin / pages).toFixed(2);
-};
+
 const DEFAULT_READING = { book: 'Some book', startPage: 1 };
 function App() {
   const [{ readings }, updateReadings] = useReadings();
-
-  const lastReading = readings[readings.length - 1] || DEFAULT_READING;
-  const form = useForm<InProgressReading>({
-    defaultValues: {
-      book: lastReading.book,
-      startPage: lastReading.endPage,
-    },
-  });
+  const form = useForm<Pick<Reading, 'book'| 'startPage'>>();
   const [reading, setReading] = useState<InProgressReading|null>(null);
   const [timer, setTimer] = useState<number|null>(null);
+
   useEffect(() => {
+    // reset fields when readings changes
+    const lastReading = readings[readings.length - 1] || DEFAULT_READING;
+    form.setValue('book', lastReading.book);
+    form.setValue('startPage', lastReading.endPage);
+  }, [readings]);
+  useEffect(() => {
+    // Start/stop timer when readings starts/end
     if (reading == null) return setTimer(null);
     setTimer(0);
     const interval = setInterval(() => { setTimer((t) => (t || 0) + 1); }, 1000);
@@ -104,38 +96,7 @@ function App() {
         </div>
         <div>
           <h2 className="text-xl">Past reads</h2>
-          <ul className="divide-y divide-gray-200 border">
-            {/* {loading && <li className="py-4 flex"> ... </li>} */}
-            {[...readings].reverse().map((r) => (
-              <li key={r.startTime} className="py-4 flex">
-                <div className="mx-3 w-full">
-                  <p className="flex justify-between text-sm font-medium text-gray-900">
-                    <span>
-                      {formatTime((r.endTime - r.startTime) / 1000)}
-                      {' - page '}
-                      {r.startPage}
-                      -
-                      {r.endPage}
-                    </span>
-                    <span>
-                      {computeSpeed(r)}
-                      {' '}
-                      min/pages
-                    </span>
-
-                  </p>
-                  <p className="flex justify-between text-sm text-gray-500">
-                    <span className="max-w-[60%] truncate">
-                      {r.book}
-                    </span>
-                    <span>
-                      {dayjs(r.startTime).fromNow()}
-                    </span>
-                  </p>
-                </div>
-              </li>
-            ))}
-          </ul>
+          <PastReads readings={readings} />
         </div>
       </div>
     </div>
