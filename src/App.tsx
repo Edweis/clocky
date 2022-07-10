@@ -4,11 +4,10 @@ import { useForm } from 'react-hook-form';
 import cn from 'classnames';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
-import useLoading from './lib/use-loading';
+import { Reading, InProgressReading } from './types';
+import useReadings from './lib/reading-api';
 
 dayjs.extend(relativeTime);
-type InProgressReading = {book:string, startPage:number, startTime:number }
-type Reading = InProgressReading & {endTime:number, endPage:number}
 const formatTime = (elasped:number) => {
   const rounded = Math.floor(elasped);
   const seconds = rounded % 60;
@@ -21,35 +20,15 @@ const computeSpeed = (reading:Reading) => {
   const timeInMin = timeInMs / 1000 / 60;
   return (timeInMin / pages).toFixed(2);
 };
-const HARRY = 'Harry Potter and the Order of the Phoenix';
-const READINGS:Reading[] = [
-  {
-    book: HARRY,
-    startPage: 15,
-    endPage: 45,
-    startTime: 1657355986444,
-    endTime: 1657355986444 + 1000 * 60 * 17.6,
-  },
-  {
-    book: HARRY,
-    startPage: 45,
-    endPage: 55,
-    startTime: 1657355986445,
-    endTime: 1657355986444 + 1000 * 60 * 14.2,
-  },
-];
-
-const saveReadingApi = async (reading:Reading) => {
-  // eslint-disable-next-line no-promise-executor-return
-  await new Promise<void>((resolve) => setTimeout(resolve, 1000));
-  READINGS.push(reading);
-};
+const DEFAULT_READING = { book: 'Some book', startPage: 1 };
 function App() {
-  const [loading, saveReading] = useLoading(saveReadingApi);
+  const [{ readings }, updateReadings] = useReadings();
+
+  const lastReading = readings[readings.length - 1] || DEFAULT_READING;
   const form = useForm<InProgressReading>({
     defaultValues: {
-      book: READINGS.at(-1)?.book,
-      startPage: READINGS.at(-1)?.endPage,
+      book: lastReading.book,
+      startPage: lastReading.endPage,
     },
   });
   const [reading, setReading] = useState<InProgressReading|null>(null);
@@ -106,10 +85,12 @@ function App() {
                 ...nextReading,
                 startTime: new Date().getTime(),
               }))
-              : () => saveReading({
-                ...reading,
-                endPage: reading.startPage + 10,
-                endTime: new Date().getTime(),
+              : () => updateReadings((doc) => {
+                doc.readings.push({
+                  ...reading,
+                  endPage: reading.startPage + 10,
+                  endTime: new Date().getTime(),
+                });
               })}
           >
             <div>
@@ -121,8 +102,8 @@ function App() {
         <div>
           <h2 className="text-xl">Past reads</h2>
           <ul className="divide-y divide-gray-200 border">
-            {loading && <li className="py-4 flex"> ... </li>}
-            {[...READINGS].reverse().map((r) => (
+            {/* {loading && <li className="py-4 flex"> ... </li>} */}
+            {[...readings].reverse().map((r) => (
               <li key={r.startTime} className="py-4 flex">
                 <div className="mx-3 w-full">
                   <p className="flex justify-between text-sm font-medium text-gray-900">

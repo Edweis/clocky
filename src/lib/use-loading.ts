@@ -25,3 +25,14 @@ export default function useLoading<T, R extends Array<any>>(
   );
   return [loading, wrappedFunction];
 }
+
+export const useLoadingEffect = (
+  fn: () => Promise<any>,
+  deps: React.DependencyList = [],
+) => {
+  const [loading, wrappedFn] = useLoading(fn, true);
+  useEffect(() => {
+    wrappedFn();
+  }, deps);
+  return loading;
+};
