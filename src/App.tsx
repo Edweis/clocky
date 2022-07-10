@@ -85,13 +85,16 @@ function App() {
                 ...nextReading,
                 startTime: new Date().getTime(),
               }))
-              : () => updateReadings((doc) => {
-                doc.readings.push({
-                  ...reading,
-                  endPage: reading.startPage + 10,
-                  endTime: new Date().getTime(),
+              : () => {
+                updateReadings((doc) => {
+                  doc.readings.push({
+                    ...reading,
+                    endPage: reading.startPage + 10,
+                    endTime: new Date().getTime(),
+                  });
                 });
-              })}
+                setReading(null);
+              }}
           >
             <div>
               {timer != null ? `Reading time: ${formatTime(timer)}` : 'Start reading !'}
