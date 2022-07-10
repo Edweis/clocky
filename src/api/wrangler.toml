@@ -7,4 +7,4 @@ workers_dev = true
 [[r2_buckets]]
 binding = 'MY_BUCKET' # <~ valid JavaScript variable name
 bucket_name = 'clocky-bucket'
-
+preview_bucket_name = 'clocky-bucket-staging'

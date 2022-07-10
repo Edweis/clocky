@@ -31,6 +31,18 @@ function App() {
     const interval = setInterval(() => { setTimer((t) => (t || 0) + 1); }, 1000);
     return () => clearInterval(interval);
   }, [reading]);
+
+  async function saveReading(nextReading:InProgressReading) {
+    updateReadings((doc) => {
+      console.log('Updating reading....', nextReading);
+      doc.readings.push({
+        ...nextReading,
+        endPage: Number(nextReading.startPage) + 10,
+        endTime: new Date().getTime(),
+      });
+    });
+    setReading(null);
+  }
   return (
     <div className="container mx-auto mt-2 px-2">
       <h1 className="text-2xl text-center">Clocky</h1>
@@ -77,16 +89,7 @@ function App() {
                 ...nextReading,
                 startTime: new Date().getTime(),
               }))
-              : () => {
-                updateReadings((doc) => {
-                  doc.readings.push({
-                    ...reading,
-                    endPage: reading.startPage + 10,
-                    endTime: new Date().getTime(),
-                  });
-                });
-                setReading(null);
-              }}
+              : () => saveReading(reading)}
           >
             <div>
               {timer != null ? `Reading time: ${formatTime(timer)}` : 'Start reading !'}

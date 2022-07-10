@@ -11,7 +11,6 @@ const computeSpeed = (reading:Reading) => {
 export default function PastReads(props:{ readings: Reading[] }) {
   // eslint-disable-next-line react/destructuring-assignment
   const reversed = [...props.readings].reverse();
-  console.log(props);
   if (reversed.length === 0) return <div>No past reads</div>;
   return (
     <ul className="divide-y divide-gray-200 border">
