@@ -1,44 +1,34 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { from } from 'automerge';
-import { InProgressReading, Reading } from '../types';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
+import { ReadingStep } from '../types';
 import Button from '../components/Button';
-import ReadingProgress from './ReadingProgress';
 import Input from '../components/Input';
 
-const DEFAULT_READING = { book: 'Some book', endPage: 1 };
-export default function StartReading(props:{
-    onSubmit:(reading:Reading)=>void,
-     lastReading:Reading|null}) {
-  const form = useForm<Pick<Reading, 'book'| 'startPage'>>();
-
-  const [reading, setReading] = useState<InProgressReading|null>(null);
+const schema = yup
+  .object({
+    book: yup.string().required(),
+    startPage: yup.number().min(0).max(5000).required(),
+  })
+  .required();
+export default function StartReading(props: {
+  onSubmit: (reading: ReadingStep.InProgress) => void;
+  reading: ReadingStep.Ready;
+}) {
+  const form = useForm({
+    defaultValues: props.reading,
+    resolver: yupResolver(schema),
+  });
+  console.log('StartReading', props);
   useEffect(() => {
-    // reset fields when readings changes
-    const lastReading = props.lastReading || DEFAULT_READING;
-    console.log({ lastReading }, 'value Set ');
-    form.reset({
-      book: lastReading.book,
-      startPage: lastReading.endPage,
-    });
-  }, [props.lastReading]);
+    form.reset(props.reading);
+  }, [props.reading]);
 
-  if (reading != null) {
-    return (
-      <ReadingProgress
-        reading={reading}
-        onSubmit={(nextReading) => {
-          props.onSubmit(nextReading);
-          setReading(null);
-        }}
-      />
-    );
-  }
   return (
     <div>
       <Input
         label="Book name"
-        disabled={reading != null}
         type="text"
         className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
         placeholder="Harry Potter and the Order of the Phoenix"
@@ -47,16 +37,18 @@ export default function StartReading(props:{
       <Input
         label="Page start"
         type="number"
-        disabled={reading != null}
         className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
         placeholder="130"
         {...form.register('startPage')}
       />
       <div className="flex justify-center mt-3">
-        <Button onClick={form.handleSubmit((nextReading) => setReading({
-          ...nextReading,
-          startTime: new Date().getTime(),
-        }))}
+        <Button
+          onClick={form.handleSubmit((nextReading) =>
+            props.onSubmit({
+              ...nextReading,
+              startTime: new Date().getTime(),
+            }),
+          )}
         >
           Start reading !
         </Button>

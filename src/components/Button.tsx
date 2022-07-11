@@ -1,6 +1,8 @@
 import cn from 'classnames';
 
-export default function Button(props:React.ButtonHTMLAttributes<HTMLButtonElement>) {
+export default function Button(
+  props: React.ButtonHTMLAttributes<HTMLButtonElement>,
+) {
   const { className, children, ...otherProps } = props;
   return (
     <button

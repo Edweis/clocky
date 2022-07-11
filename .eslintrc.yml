@@ -2,11 +2,9 @@ env:
   browser: true
   es2021: true
 extends:
-  - plugin:react/recommended
-  - airbnb
-  - plugin:react/jsx-runtime
-  - plugin:@typescript-eslint/eslint-recommended
+  - airbnb-base
   - plugin:@typescript-eslint/recommended
+  - prettier
 parser: '@typescript-eslint/parser'
 parserOptions:
   ecmaFeatures:
@@ -20,23 +18,29 @@ plugins:
   - react-hooks
   - react
 rules:
+  # implicit-arrow-linebreak: off
   react/jsx-filename-extension: off
   import/extensions: off
   react/jsx-props-no-spreading: off
-  react/destructuring-assignment: off
-  react/require-default-props: off
+  # react/destructuring-assignment: off
+  # react/require-default-props: off
   curly: ["error", "multi"]
-  '@typescript-eslint/ban-ts-comment': off
-  no-void: ["error", {"allowAsStatement": true}]
-  '@typescript-eslint/explicit-module-boundary-types': off
-  '@typescript-eslint/no-namespace': off
-  '@typescript-eslint/no-unused-vars': warn
-  import/no-unresolved: off # duplicate with typescript
-  import/prefer-default-export: off
-  jsx-a11y/label-has-associated-control: off
-  jsx-a11y/no-autofocus: off
+  # '@typescript-eslint/ban-ts-comment': off
+  # no-void: ["error", {"allowAsStatement": true}]
+  # '@typescript-eslint/explicit-module-boundary-types': off
+  # '@typescript-eslint/no-namespace': off
+  # '@typescript-eslint/no-unused-vars': warn
+  # import/no-unresolved: off # duplicate with typescript
+  # import/prefer-default-export: off
+  # jsx-a11y/label-has-associated-control: off
+  # jsx-a11y/no-autofocus: off
   no-console: off
+  no-shadow: off
   prettier/prettier: ["error", { "singleQuote": true, "trailingComma": "all" }]
 settings:
   import/resolver:
     typescript: {}
+ignorePatterns:
+  - '**/node_modules/**'
+  - '**/dist/**'
+

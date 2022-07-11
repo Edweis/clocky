@@ -2,13 +2,13 @@ import dayjs from 'dayjs';
 import formatTime from './lib/format-time';
 import type { Reading } from './types';
 
-const computeSpeed = (reading:Reading) => {
+const computeSpeed = (reading: Reading) => {
   const pages = reading.endPage - reading.startPage;
   const timeInMs = reading.endTime - reading.startTime;
   const timeInMin = timeInMs / 1000 / 60;
   return (timeInMin / pages).toFixed(2);
 };
-export default function PastReads(props:{ readings: Reading[] }) {
+export default function PastReads(props: { readings: Reading[] }) {
   // eslint-disable-next-line react/destructuring-assignment
   const reversed = [...props.readings].reverse();
   if (reversed.length === 0) return <div>No past reads</div>;
@@ -23,23 +23,14 @@ export default function PastReads(props:{ readings: Reading[] }) {
                 {formatTime((r.endTime - r.startTime) / 1000)}
                 {' - page '}
                 {r.startPage}
-                -
-                {r.endPage}
+-{r.endPage}
               </span>
               <span>
-                {computeSpeed(r)}
-                {' '}
-                min/pages
-              </span>
-
+{computeSpeed(r)} min/pages</span>
             </p>
             <p className="flex justify-between text-sm text-gray-500">
-              <span className="max-w-[60%] truncate">
-                {r.book}
-              </span>
-              <span>
-                {dayjs(r.startTime).fromNow()}
-              </span>
+              <span className="max-w-[60%] truncate">{r.book}</span>
+              <span>{dayjs(r.startTime).fromNow()}</span>
             </p>
           </div>
         </li>

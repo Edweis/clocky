@@ -2,11 +2,12 @@ import './App.css';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import { useEffect, useState } from 'react';
-import { ReadingStep, Reading } from './types';
+import { ReadingStep } from './types';
 import useReadings from './lib/reading-api';
 import PastReads from './PastReads';
 import StartReading from './ReadingSteps/StartReading';
 import ReadingProgress from './ReadingSteps/ReadingProgress';
+import PausedReading from './ReadingSteps/PausedReading';
 
 dayjs.extend(relativeTime);
 const DEFAULT_READING = { book: 'Some book', endPage: 1 };
@@ -14,25 +15,42 @@ const DEFAULT_READING = { book: 'Some book', endPage: 1 };
 function App() {
   const [{ readings }, updateReadings] = useReadings();
   const lastReading = readings[readings.length - 1] || DEFAULT_READING;
-  const [step, setStep] = useState<ReadingStep.State>({
-    state: 'ready',
+  const DEFAULT_STEP = {
+    state: 'ready' as const,
     data: { book: lastReading.book, startPage: lastReading.endPage },
-  });
+  };
+  const [step, setStep] = useState<ReadingStep.State>(DEFAULT_STEP);
+  useEffect(() => {
+    setStep(DEFAULT_STEP);
+  }, [lastReading.startTime]);
+  console.log('App', { step });
   return (
     <div className="container mx-auto pt-2 px-2 bg-yellow-100">
       <h1 className="text-3xl text-center my-2">Clocky</h1>
       <div className="grid gap-3">
         <div>
           {step.state === 'ready' && (
-          <StartReading
-            onSubmit={(nextReading) => {
-              updateReadings((doc) => doc.readings.push(nextReading));
-            }}
-            reading={step.data}
-          />
+            <StartReading
+              onSubmit={(data) =>
+                setStep({ state: 'in-progress' as const, data })
+              }
+              reading={step.data}
+            />
           )}
           {step.state === 'in-progress' && (
-            <ReadingProgress />
+            <ReadingProgress
+              onSubmit={(data) => setStep({ state: 'paused', data })}
+              reading={step.data}
+            />
+          )}
+          {step.state === 'paused' && (
+            <PausedReading
+              onSubmit={(data) => {
+                updateReadings((doc) => doc.readings.push(data));
+                setStep({ state: 'ready', data });
+              }}
+              reading={step.data}
+            />
           )}
         </div>
         <div>
@@ -42,4 +60,5 @@ function App() {
       </div>
     </div>
   );
-} export default App;
+}
+export default App;
