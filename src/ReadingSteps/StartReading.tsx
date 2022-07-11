@@ -37,8 +37,10 @@ export default function StartReading(props: {
       <Input
         label="Page start"
         type="number"
+        autoFocus
         className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
         placeholder="130"
+        inputMode="numeric"
         {...form.register('startPage')}
       />
       <div className="flex justify-center mt-3">
