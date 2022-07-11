@@ -1,34 +1,39 @@
 import './App.css';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
-import { InProgressReading } from './types';
+import { useEffect, useState } from 'react';
+import { ReadingStep, Reading } from './types';
 import useReadings from './lib/reading-api';
 import PastReads from './PastReads';
-import StartReading from './StartReading';
+import StartReading from './ReadingSteps/StartReading';
+import ReadingProgress from './ReadingSteps/ReadingProgress';
 
 dayjs.extend(relativeTime);
+const DEFAULT_READING = { book: 'Some book', endPage: 1 };
 
 function App() {
   const [{ readings }, updateReadings] = useReadings();
-
-  const saveReading = async (nextReading:InProgressReading) => {
-    updateReadings((doc) => {
-      doc.readings.push({
-        ...nextReading,
-        endPage: Number(nextReading.startPage) + 10,
-        endTime: new Date().getTime(),
-      });
-    });
-  };
+  const lastReading = readings[readings.length - 1] || DEFAULT_READING;
+  const [step, setStep] = useState<ReadingStep.State>({
+    state: 'ready',
+    data: { book: lastReading.book, startPage: lastReading.endPage },
+  });
   return (
-    <div className="container mx-auto mt-2 px-2">
-      <h1 className="text-2xl text-center">Clocky</h1>
+    <div className="container mx-auto pt-2 px-2 bg-yellow-100">
+      <h1 className="text-3xl text-center my-2">Clocky</h1>
       <div className="grid gap-3">
         <div>
+          {step.state === 'ready' && (
           <StartReading
-            onSubmit={saveReading}
-            lastReading={readings[readings.length - 1] || null}
+            onSubmit={(nextReading) => {
+              updateReadings((doc) => doc.readings.push(nextReading));
+            }}
+            reading={step.data}
           />
+          )}
+          {step.state === 'in-progress' && (
+            <ReadingProgress />
+          )}
         </div>
         <div>
           <h2 className="text-xl">Past reads</h2>

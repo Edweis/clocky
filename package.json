@@ -5,11 +5,13 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "lint": "eslint . --fix --quiet"
   },
   "dependencies": {
     "@cloudflare/workers-types": "^3.14.0",
     "@heroicons/react": "^1.0.6",
+    "@hookform/resolvers": "^2.9.5",
     "automerge": "1.0.1-preview.7",
     "classnames": "^2.3.1",
     "dayjs": "^1.11.3",
@@ -33,12 +35,14 @@
     "autoprefixer": "^10.4.7",
     "eslint": "^7.32.0 || ^8.2.0",
     "eslint-config-airbnb": "19.0.4",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-config-prettier": "^8.5.0",
     "eslint-import-resolver-typescript": "^3.2.5",
-    "eslint-plugin-import": "^2.25.3",
+    "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-jsx-a11y": "^6.5.1",
     "eslint-plugin-prettier": "^4.2.1",
-    "eslint-plugin-react": "^7.28.0",
-    "eslint-plugin-react-hooks": "^4.3.0",
+    "eslint-plugin-react": "^7.30.1",
+    "eslint-plugin-react-hooks": "^4.6.0",
     "postcss": "^8.4.14",
     "prettier": "^2.7.1",
     "tailwindcss": "^3.1.5",

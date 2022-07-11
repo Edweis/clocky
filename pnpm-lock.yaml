@@ -3,6 +3,7 @@ lockfileVersion: 5.4
 specifiers:
   '@cloudflare/workers-types': ^3.14.0
   '@heroicons/react': ^1.0.6
+  '@hookform/resolvers': ^2.9.5
   '@tailwindcss/forms': ^0.5.2
   '@types/js-cookie': ^3.0.2
   '@types/react': ^18.0.15
@@ -16,12 +17,14 @@ specifiers:
   dayjs: ^1.11.3
   eslint: ^7.32.0 || ^8.2.0
   eslint-config-airbnb: 19.0.4
+  eslint-config-airbnb-base: ^15.0.0
+  eslint-config-prettier: ^8.5.0
   eslint-import-resolver-typescript: ^3.2.5
-  eslint-plugin-import: ^2.25.3
+  eslint-plugin-import: ^2.26.0
   eslint-plugin-jsx-a11y: ^6.5.1
   eslint-plugin-prettier: ^4.2.1
-  eslint-plugin-react: ^7.28.0
-  eslint-plugin-react-hooks: ^4.3.0
+  eslint-plugin-react: ^7.30.1
+  eslint-plugin-react-hooks: ^4.6.0
   js-cookie: ^3.0.1
   ky: ^0.31.0
   localforage: ^1.10.0
@@ -40,6 +43,7 @@ specifiers:
 dependencies:
   '@cloudflare/workers-types': 3.14.0
   '@heroicons/react': 1.0.6_react@18.2.0
+  '@hookform/resolvers': 2.9.5_react-hook-form@7.33.1
   automerge: 1.0.1-preview.7
   classnames: 2.3.1
   dayjs: 1.11.3
@@ -63,10 +67,12 @@ devDependencies:
   autoprefixer: 10.4.7_postcss@8.4.14
   eslint: 8.19.0
   eslint-config-airbnb: 19.0.4_v5tujogpuc5bme4gayxithymdy
+  eslint-config-airbnb-base: 15.0.0_q2xwze32dd33a2fc2qubwr4ie4
+  eslint-config-prettier: 8.5.0_eslint@8.19.0
   eslint-import-resolver-typescript: 3.2.5_q2xwze32dd33a2fc2qubwr4ie4
   eslint-plugin-import: 2.26.0_sz72bmkmcbuk5wwg3sr4g74xyi
   eslint-plugin-jsx-a11y: 6.6.0_eslint@8.19.0
-  eslint-plugin-prettier: 4.2.1_exbhzpnbupd3ikhi4722x4yn6e
+  eslint-plugin-prettier: 4.2.1_7uxdfn2xinezdgvmbammh6ev5i
   eslint-plugin-react: 7.30.1_eslint@8.19.0
   eslint-plugin-react-hooks: 4.6.0_eslint@8.19.0
   postcss: 8.4.14
@@ -404,6 +410,14 @@ packages:
       react: '>= 16'
     dependencies:
       react: 18.2.0
+    dev: false
+
+  /@hookform/resolvers/2.9.5_react-hook-form@7.33.1:
+    resolution: {integrity: sha512-4XABrKdE4GpX6v2RZ+Ij1Wrl9qPEl5ZvVhFxROY+SZhP/6TU8gPw0LO4ZS9/GgIbTx3Pw1U8HmcXVAoGOq+7iA==}
+    peerDependencies:
+      react-hook-form: ^7.0.0
+    dependencies:
+      react-hook-form: 7.33.1_react@18.2.0
     dev: false
 
   /@humanwhocodes/config-array/0.9.5:
@@ -1819,6 +1833,15 @@ packages:
       object.entries: 1.1.5
     dev: true
 
+  /eslint-config-prettier/8.5.0_eslint@8.19.0:
+    resolution: {integrity: sha512-obmWKLUNCnhtQRKc+tmnYuQl0pFU1ibYJQ5BGhTVB08bHe9wC8qUeG7c08dj9XX+AuPj1YSGSQIHl1pnDHZR0Q==}
+    hasBin: true
+    peerDependencies:
+      eslint: '>=7.0.0'
+    dependencies:
+      eslint: 8.19.0
+    dev: true
+
   /eslint-import-resolver-node/0.3.6:
     resolution: {integrity: sha512-0En0w03NRVMn9Uiyn8YRPDKvWjxCWkslUEhGNTdGx15RvPJYQ+lbOlqrlNI2vEAs4pDYK4f/HN2TbDmk5TP0iw==}
     dependencies:
@@ -1928,7 +1951,7 @@ packages:
       semver: 6.3.0
     dev: true
 
-  /eslint-plugin-prettier/4.2.1_exbhzpnbupd3ikhi4722x4yn6e:
+  /eslint-plugin-prettier/4.2.1_7uxdfn2xinezdgvmbammh6ev5i:
     resolution: {integrity: sha512-f/0rXLXUt0oFYs8ra4w49wYZBG5GKZpAYsJSm6rnYL5uVDjd+zowwMwVZHnAjf4edNrKpCDYfXDgmRE/Ak7QyQ==}
     engines: {node: '>=12.0.0'}
     peerDependencies:
@@ -1940,6 +1963,7 @@ packages:
         optional: true
     dependencies:
       eslint: 8.19.0
+      eslint-config-prettier: 8.5.0_eslint@8.19.0
       prettier: 2.7.1
       prettier-linter-helpers: 1.0.0
     dev: true

@@ -8,7 +8,7 @@ import ky from 'ky';
 import { Reading } from '../types';
 import { useLoadingEffect } from './use-loading';
 
-const LS_KEY = 'automerge-db-3';
+const LS_KEY = 'automerge-db-4';
 const COOKIE_ETAG = 'cookie-etag';
 
 const r2Api = ky.create({
