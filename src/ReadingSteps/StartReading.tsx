@@ -26,7 +26,7 @@ export default function StartReading(props: {
   }, [props.reading]);
 
   return (
-    <div>
+    <div className="grid gap-3">
       <Input
         label="Book name"
         type="text"

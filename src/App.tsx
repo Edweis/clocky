@@ -25,7 +25,7 @@ function App() {
   }, [lastReading.startTime]);
   console.log('App', { step });
   return (
-    <div className="container mx-auto pt-2 px-2 bg-yellow-100">
+    <div className="container mx-auto pt-2 px-2 bg-yellow-400">
       <h1 className="text-3xl text-center my-2">Clocky</h1>
       <div className="grid gap-3">
         <div className="h-[65vh] flex flex-col justify-center">

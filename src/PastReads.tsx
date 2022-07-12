@@ -13,7 +13,7 @@ export default function PastReads(props: { readings: Reading[] }) {
   const reversed = [...props.readings].reverse();
   if (reversed.length === 0) return <div>No past reads</div>;
   return (
-    <ul className="divide-y divide-gray-200 border">
+    <ul className="divide-y divide-black border border-black">
       {/* {loading && <li className="py-4 flex"> ... </li>} */}
       {reversed.map((r) => (
         <li key={r.startTime} className="py-4 flex">
@@ -22,13 +22,11 @@ export default function PastReads(props: { readings: Reading[] }) {
               <span>
                 {formatTime((r.endTime - r.startTime) / 1000)}
                 {' - page '}
-                {r.startPage}
--{r.endPage}
+                {r.startPage}-{r.endPage}
               </span>
-              <span>
-{computeSpeed(r)} min/pages</span>
+              <span>{computeSpeed(r)} min/pages</span>
             </p>
-            <p className="flex justify-between text-sm text-gray-500">
+            <p className="flex justify-between text-sm text-gray-700">
               <span className="max-w-[60%] truncate">{r.book}</span>
               <span>{dayjs(r.startTime).fromNow()}</span>
             </p>

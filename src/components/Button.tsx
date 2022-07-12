@@ -8,7 +8,7 @@ export default function Button(
     <button
       type="button"
       className={cn(
-        'text-center items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-black bg-yellow-400 hover:bg-yellow-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500',
+        'text-center items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-black hover:bg-gray-800 focus:outline-none focus:ring-4 focus:ring-offset-2 focus:ring-indigo-500',
         className,
       )}
       {...otherProps}
