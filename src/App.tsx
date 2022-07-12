@@ -26,8 +26,8 @@ function App() {
   console.log('App', { step });
   return (
     <div className="container mx-auto pt-2 px-2 bg-yellow-400">
-      <h1 className="text-5xl text-center my-6 font-semibold">Clocky</h1>
-      <div className="grid gap-3">
+      <h1 className="text-5xl text-center my-6">Clocky</h1>
+      <div className="grid gap-4">
         <div className="h-[40vh] flex flex-col justify-center">
           {step.state === 'ready' && (
             <StartReading

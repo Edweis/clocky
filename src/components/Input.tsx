@@ -4,6 +4,7 @@ import cn from 'classnames';
 type Props = React.InputHTMLAttributes<HTMLInputElement> & {
   className?: string;
   label: string;
+  autoSelect?: boolean;
 };
 const Input = React.forwardRef((props: Props, ref) => {
   const { className, label, ...otherProps } = props;

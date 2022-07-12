@@ -16,20 +16,20 @@ export default function PausedReading(props: {
 }) {
   const { reading } = props;
   const form = useForm({
-    defaultValues: { endPage: reading.startPage },
     resolver: yupResolver(schema),
     context: { min: reading.startPage },
   });
   console.log({ PausedReading: reading });
+
   return (
-    <div className="grid gap-2">
+    <div className="grid gap-4">
       <Input
         label="End Page"
         type="number"
         autoFocus
         inputMode="decimal"
         className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
-        placeholder={reading.startPage.toString()}
+        placeholder={`Started from page ${reading.startPage.toString()} until page ...`}
         {...form.register('endPage')}
       />
       <div className="flex justify-center">
