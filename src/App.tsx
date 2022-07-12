@@ -8,6 +8,7 @@ import PastReads from './PastReads';
 import StartReading from './ReadingSteps/StartReading';
 import ReadingProgress from './ReadingSteps/ReadingProgress';
 import PausedReading from './ReadingSteps/PausedReading';
+import Stats from './Stats';
 
 dayjs.extend(relativeTime);
 const DEFAULT_READING = { book: 'Some book', endPage: 1 };
@@ -52,6 +53,10 @@ function App() {
               reading={step.data}
             />
           )}
+        </div>
+        <div>
+          <h2 className="text-xl">Streak</h2>
+          <Stats readings={readings} />
         </div>
         <div>
           <h2 className="text-xl">Past reads</h2>
