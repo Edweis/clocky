@@ -14,7 +14,6 @@ export default function PastReads(props: { readings: Reading[] }) {
   if (reversed.length === 0) return <div>No past reads</div>;
   return (
     <ul className="divide-y divide-black border border-black">
-      {/* {loading && <li className="py-4 flex"> ... </li>} */}
       {reversed.map((r) => (
         <li key={r.startTime} className="py-4 flex">
           <div className="mx-3 w-full">
