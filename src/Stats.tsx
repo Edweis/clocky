@@ -1,19 +1,5 @@
-import * as d3 from 'd3';
 import dayjs from 'dayjs';
-import { useEffect, useId } from 'react';
-import { Reading, ReadingStep } from './types';
-
-const id = 'stats';
-const BOOK = 'Harry Potter';
-const FakeReadings: Reading[] = Array(7)
-  .fill({})
-  .map((b, index) => ({
-    book: BOOK,
-    startTime: 100 * Math.random(),
-    endTime: 120,
-    startPage: 10,
-    endPage: 20,
-  }));
+import { Reading } from './types';
 
 const DAYS = [
   'Monday',
