@@ -1,5 +1,5 @@
 import dayjs from 'dayjs';
-import { groupBy, mapValues, max, sum } from 'lodash-es';
+import { groupBy, mapValues, max, round, sum } from 'lodash-es';
 import formatTime from './lib/format-time';
 import { Reading } from './types';
 
@@ -29,11 +29,11 @@ export default function Stats(props: { readings: Reading[] }) {
   );
   const maxTime = max(timePerDay) || 1;
   return (
-    <div className="grid grid-cols-7">
+    <div className="grid grid-cols-7 border border-black py-3">
       {timePerDay.map((score, index) => (
         <div key={index} className="flex flex-col justify-end">
           <div className="flex flex-col">
-            <span className="self-center">{formatTime(score)}</span>
+            <span className="self-center">{round(score / 60)}</span>
             <div
               style={{ height: (score / maxTime) * 100 }}
               className="bg-blue-700 rounded-md w-4 self-center"
