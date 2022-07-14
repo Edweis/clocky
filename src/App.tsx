@@ -54,12 +54,10 @@ function App() {
             />
           )}
         </div>
-        {import.meta.env.DEV && (
-          <div>
-            <h2 className="text-xl">Streak</h2>
-            <Stats readings={readings} />
-          </div>
-        )}
+        <div>
+          <h2 className="text-xl">Streak</h2>
+          <Stats readings={readings} />
+        </div>
         <div>
           <h2 className="text-xl">Past reads</h2>
           <PastReads readings={readings} />
