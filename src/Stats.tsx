@@ -12,11 +12,11 @@ const DAYS = [
   'Friday',
   'Saturday',
 ].map((d) => d.slice(0, 3));
-const todayDow = dayjs().day();
-const LAST_DAYS = Array(7)
-  .fill(null)
-  .map((e, i) => (todayDow + i + 1) % 7);
 export default function Stats(props: { readings: Reading[] }) {
+  const todayDow = dayjs().day();
+  const LAST_DAYS = Array(7)
+    .fill(null)
+    .map((e, i) => (todayDow + i + 1) % 7);
   const filteredReadings = props.readings.filter((r) =>
     dayjs(r.startTime).isAfter(dayjs().subtract(1, 'w').startOf('day')),
   );
@@ -31,7 +31,7 @@ export default function Stats(props: { readings: Reading[] }) {
   return (
     <div className="grid grid-cols-7">
       {timePerDay.map((score, index) => (
-        <div key={score} className="flex flex-col justify-end">
+        <div key={index} className="flex flex-col justify-end">
           <div className="flex flex-col">
             <span className="self-center">{formatTime(score)}</span>
             <div

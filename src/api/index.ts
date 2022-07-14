@@ -10,7 +10,10 @@ const CORS_HEADERS = {
 };
 
 async function fetch(request: Request, env: Env, ctx: ExecutionContext) {
-  const headers = new Headers(CORS_HEADERS);
+  const headers = new Headers({
+    ...CORS_HEADERS,
+    'Cache-Control': 'max-age=30',
+  });
   const url = new URL(request.url);
   const key = url.pathname.slice(1);
   console.log({
