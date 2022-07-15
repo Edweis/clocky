@@ -11,7 +11,7 @@ export default function ReadingProgress(props: {
   const [timer, setTimer] = useState<number>(0);
   useEffect(() => {
     const interval = setInterval(() => {
-      setTimer((t) => (t || 0) + 1);
+      setTimer((new Date().getTime() - reading.startTime) / 1000);
     }, 1000);
     return () => clearInterval(interval);
   }, [reading]);
@@ -23,7 +23,7 @@ export default function ReadingProgress(props: {
         props.onSubmit({ ...reading, endTime: new Date().getTime() })
       }
     >
-      <div>Reading time: {formatTime(timer)}</div>
+      <div>Reading time: {formatTime(Math.trunc(timer))}</div>
       <div>Click to end session</div>
     </Button>
   );
