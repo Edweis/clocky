@@ -14,11 +14,8 @@ const COOKIE_ETAG = 'cookie-etag';
 const r2Api = ky.create({
   timeout: 2000,
   retry: 0,
-  prefixUrl: import.meta.env.DEV
-    ? 'http://localhost:8787'
-    : 'https://clocky-api.edweis.workers.dev',
+  prefixUrl: '/api/database/',
 });
-
 const setETag = (etag: string) =>
   Cookie.set(COOKIE_ETAG, etag, { sameSite: 'Lax' });
 const getETag = () => Cookie.get(COOKIE_ETAG);

@@ -9,6 +9,33 @@ const CORS_HEADERS = {
   'Access-Control-Max-Age': '86400',
 };
 
+const headers = new Headers({
+  ...CORS_HEADERS,
+  'Cache-Control': 'max-age=30',
+});
+
+export const onRequestGet: PagesFunction<Env> = async ({ params, env }) => {
+  const key = params.path as string;
+  console.log({ params, env });
+  const object = await env.MY_BUCKET.get(key);
+  if (object === null) return new Response('Object Not Found', { status: 404 });
+
+  object.writeHttpMetadata(headers);
+  headers.set('etag', object.httpEtag);
+  return new Response(object.body, { headers });
+};
+
+export const onRequestHead: PagesFunction<Env> = async ({ params, env }) => {
+  const key = params.path as string;
+  const object = await env.MY_BUCKET.head(key);
+  if (object === null)
+    return new Response('Object Not Found', { status: 404, headers });
+
+  object.writeHttpMetadata(headers);
+  headers.set('etag', object.httpEtag);
+  return new Response(null, { headers });
+};
+
 async function fetch(request: Request, env: Env, ctx: ExecutionContext) {
   const headers = new Headers({
     ...CORS_HEADERS,
@@ -62,4 +89,3 @@ async function fetch(request: Request, env: Env, ctx: ExecutionContext) {
     headers: { Allow: 'PUT, GET, DELETE', ...headers },
   });
 }
-export default { fetch };
