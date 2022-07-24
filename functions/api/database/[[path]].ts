@@ -5,6 +5,8 @@ import {
 } from '@aws-sdk/client-s3';
 import { Upload } from '@aws-sdk/lib-storage';
 
+declare let process: { env: { NODE_ENV: string } };
+
 const s3 = new S3Client({
   region: 'ap-southeast-1',
   credentials: {
