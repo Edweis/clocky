@@ -2,6 +2,7 @@ import './App.css';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import { useEffect, useState } from 'react';
+import { CompleteMultipartUploadRequest } from '@aws-sdk/client-s3';
 import { ReadingStep } from './types';
 import useReadings from './lib/reading-api';
 import PastReads from './PastReads';
@@ -9,6 +10,8 @@ import StartReading from './ReadingSteps/StartReading';
 import ReadingProgress from './ReadingSteps/ReadingProgress';
 import PausedReading from './ReadingSteps/PausedReading';
 import Stats from './Stats';
+import { login } from './lib/apis/login';
+import { getDatabase, setDataBase } from './lib/apis/database';
 
 dayjs.extend(relativeTime);
 const DEFAULT_READING = { book: 'Some book', endPage: 1 };
@@ -24,6 +27,11 @@ function App() {
   useEffect(() => {
     setStep(DEFAULT_STEP);
   }, [lastReading.startTime]);
+  useEffect(() => {
+    login().then((response) => {
+      setDataBase(response.awsUserId, response.credentials, 'hello');
+    });
+  }, []);
   console.log('App', { step });
   return (
     <div className="container mx-auto pt-2 px-2 bg-yellow-400">
