@@ -22,6 +22,7 @@ rules:
   react/jsx-filename-extension: off
   import/extensions: off
   react/jsx-props-no-spreading: off
+  import/prefer-default-export: off
   # react/destructuring-assignment: off
   # react/require-default-props: off
   curly: ["error", "multi"]

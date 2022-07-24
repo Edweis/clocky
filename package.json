@@ -4,12 +4,13 @@
   "version": "0.0.0",
   "scripts": {
     "dev": "vite",
-    "start":"vite build --watch",
+    "start": "vite build --watch",
     "build": "tsc && vite build",
     "preview": "vite preview",
     "lint": "eslint . --fix --quiet"
   },
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.135.0",
     "@cloudflare/workers-types": "^3.14.0",
     "@heroicons/react": "^1.0.6",
     "@hookform/resolvers": "^2.9.5",
