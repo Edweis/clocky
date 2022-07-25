@@ -27,7 +27,6 @@ export const setDataBase = async (
 ) => {
   const s3 = new S3Client({ credentials, region: REGION });
   const Key = `${keyPrefix}/${userDir}/database.bin`;
-  console.log('Key---', Key);
   const response = await s3.send(
     new PutObjectCommand({ Bucket, Key, Body: data }),
   );
