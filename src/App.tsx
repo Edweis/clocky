@@ -2,7 +2,7 @@ import './App.css';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import { useEffect, useState } from 'react';
-import { CompleteMultipartUploadRequest } from '@aws-sdk/client-s3';
+import { BookOpenIcon, ChartBarIcon, UserIcon } from '@heroicons/react/outline';
 import { ReadingStep } from './types';
 import useReadings from './lib/reading-api';
 import PastReads from './PastReads';
@@ -35,7 +35,12 @@ function App() {
   console.log('App', { step });
   return (
     <div className="container mx-auto pt-2 px-2 bg-yellow-400">
-      <h1 className="text-5xl text-center my-6">Clocky</h1>
+      <h1 className="text-5xl text-center my-4">clocky</h1>
+      <h3 className="flex h-6 justify-around mx-10">
+        <BookOpenIcon />
+        <ChartBarIcon />
+        <UserIcon />
+      </h3>
       <div className="grid gap-4">
         <div className="h-[40vh] flex flex-col justify-center">
           {step.state === 'ready' && (
