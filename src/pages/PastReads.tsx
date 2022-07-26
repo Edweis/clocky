@@ -1,6 +1,7 @@
 import dayjs from 'dayjs';
-import formatTime from './lib/format-time';
-import type { Reading } from './types';
+import formatTime from '../lib/format-time';
+import useReadings from '../lib/reading-api';
+import type { Reading } from '../types';
 
 const computeSpeed = (reading: Reading) => {
   const pages = reading.endPage - reading.startPage;
@@ -8,9 +9,9 @@ const computeSpeed = (reading: Reading) => {
   const timeInMin = timeInMs / 1000 / 60;
   return (timeInMin / pages).toFixed(2);
 };
-export default function PastReads(props: { readings: Reading[] }) {
-  // eslint-disable-next-line react/destructuring-assignment
-  const reversed = [...props.readings].reverse();
+export default function PastReads() {
+  const [{ readings }] = useReadings();
+  const reversed = [...readings].reverse();
   if (reversed.length === 0) return <div>No past reads</div>;
   return (
     <ul className="divide-y divide-black border border-black">

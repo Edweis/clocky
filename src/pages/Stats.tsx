@@ -1,7 +1,6 @@
 import dayjs from 'dayjs';
 import { groupBy, mapValues, max, round, sum } from 'lodash-es';
-import formatTime from './lib/format-time';
-import { Reading } from './types';
+import useReadings from '../lib/reading-api';
 
 const DAYS = [
   'Sunday',
@@ -12,12 +11,14 @@ const DAYS = [
   'Friday',
   'Saturday',
 ].map((d) => d.slice(0, 3));
-export default function Stats(props: { readings: Reading[] }) {
+export default function Stats() {
+  const [{ readings }] = useReadings();
+
   const todayDow = dayjs().day();
   const LAST_DAYS = Array(7)
     .fill(null)
     .map((e, i) => (todayDow + i + 1) % 7);
-  const filteredReadings = props.readings.filter((r) =>
+  const filteredReadings = readings.filter((r) =>
     dayjs(r.startTime).isAfter(dayjs().subtract(1, 'w').startOf('day')),
   );
   const perDay = groupBy(filteredReadings, (r) => dayjs(r.startTime).day());
