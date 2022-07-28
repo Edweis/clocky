@@ -2,9 +2,9 @@ import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-import { ReadingStep } from '../types';
-import Button from '../components/Button';
-import Input from '../components/Input';
+import { ReadingStep } from '../../types';
+import Button from '../../components/Button';
+import Input from '../../components/Input';
 
 const schema = yup
   .object({

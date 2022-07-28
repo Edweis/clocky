@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
-import Button from '../components/Button';
-import formatTime from '../lib/format-time';
-import { ReadingStep } from '../types';
+import Button from '../../components/Button';
+import formatTime from '../../lib/format-time';
+import { ReadingStep } from '../../types';
 
 export default function ReadingProgress(props: {
   reading: ReadingStep.InProgress;

@@ -5,17 +5,19 @@ import { useEffect } from 'react';
 import { BookOpenIcon, ChartBarIcon, UserIcon } from '@heroicons/react/outline';
 import PastReads from './PastReads';
 import Stats from './Stats';
-import { login } from '../lib/apis/login';
+import { unAuthLogin } from '../lib/apis/unAuthLogin';
 import { getDatabase, setDataBase } from '../lib/apis/database';
 import Reader from './Reader';
+import { authLogin } from '../lib/apis/authLogin';
 
 dayjs.extend(relativeTime);
 
 function App() {
   useEffect(() => {
-    login().then((response) => {
-      setDataBase(response.awsUserId, response.credentials, 'hello');
-    });
+    // unAuthLogin().then((response) => {
+    //   setDataBase(response.awsUserId, response.credentials, 'hello');
+    // });
+    authLogin('francois@reebelo.com', 'asdfasdf');
   }, []);
   return (
     <div className="container mx-auto pt-2 px-2 bg-yellow-400">

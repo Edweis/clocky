@@ -1,9 +1,9 @@
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-import { Reading, ReadingStep } from '../types';
-import Input from '../components/Input';
-import Button from '../components/Button';
+import { Reading, ReadingStep } from '../../types';
+import Input from '../../components/Input';
+import Button from '../../components/Button';
 
 const schema: yup.SchemaOf<{ endPage: number }> = yup
   .object({
