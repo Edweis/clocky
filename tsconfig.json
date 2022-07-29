@@ -16,8 +16,7 @@
     "noEmit": true,
     "jsx": "react-jsx",
     "types": [
-      "@cloudflare/workers-types"
-    ],
+      "@cloudflare/workers-types",    ],
   },
   "include": ["src", "functions"],
   // "references": [{ "path": "./tsconfig.node.json" }]

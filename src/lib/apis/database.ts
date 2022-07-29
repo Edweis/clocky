@@ -4,7 +4,7 @@ import {
   S3Client,
 } from '@aws-sdk/client-s3';
 import type { Credentials } from '@aws-sdk/types';
-import { REGION } from './constants';
+import { REGION } from '../aws-constants';
 
 const Bucket = import.meta.env.PROD
   ? 'clocky-database-prod'
@@ -15,7 +15,7 @@ export const getDatabase = async (
   credentials: Credentials,
 ) => {
   const s3 = new S3Client({ credentials, region: REGION });
-  const Key = `${keyPrefix}/${userDir}`;
+  const Key = `automerge-db-4`;
   const response = await s3.send(new GetObjectAclCommand({ Bucket, Key }));
   console.log('response---', response);
 };

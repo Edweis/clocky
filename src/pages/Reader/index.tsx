@@ -5,10 +5,11 @@ import PausedReading from '../ReadingSteps/PausedReading';
 import ReadingProgress from '../ReadingSteps/ReadingProgress';
 import StartReading from '../ReadingSteps/StartReading';
 
-const DEFAULT_READING = { book: 'Some book', endPage: 1 };
+const DEFAULT_READING = { book: 'Your first book', endPage: 1 };
 
 export default function Reader() {
-  const [{ readings }, updateReadings] = useReadings();
+  const [{ readings }, pushReading] = useReadings();
+  console.log({ readings });
   const lastReading = readings[readings.length - 1] || DEFAULT_READING;
   const DEFAULT_STEP = {
     state: 'ready' as const,
@@ -37,7 +38,7 @@ export default function Reader() {
     return (
       <PausedReading
         onSubmit={(data) => {
-          updateReadings((doc) => doc.readings.push(data));
+          pushReading(data);
           setStep({ state: 'ready', data });
         }}
         reading={step.data}

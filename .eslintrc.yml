@@ -44,4 +44,3 @@ settings:
 ignorePatterns:
   - '**/node_modules/**'
   - '**/dist/**'
-
