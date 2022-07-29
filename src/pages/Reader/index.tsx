@@ -7,7 +7,7 @@ import StartReading from '../ReadingSteps/StartReading';
 
 const DEFAULT_READING = { book: 'Your first book', endPage: 1 };
 
-export default function Reader() {
+function Content() {
   const [{ readings }, pushReading] = useReadings();
   console.log({ readings });
   const lastReading = readings[readings.length - 1] || DEFAULT_READING;
@@ -45,4 +45,12 @@ export default function Reader() {
       />
     );
   throw Error('state is unknown');
+}
+
+export default function Reader() {
+  return (
+    <div className="h-[40vh] flex flex-col justify-center">
+      <Content />
+    </div>
+  );
 }

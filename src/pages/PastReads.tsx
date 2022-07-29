@@ -9,7 +9,7 @@ const computeSpeed = (reading: Reading) => {
   const timeInMin = timeInMs / 1000 / 60;
   return (timeInMin / pages).toFixed(2);
 };
-export default function PastReads() {
+export function Content() {
   const [{ readings }] = useReadings();
   const reversed = [...readings].reverse();
   if (reversed.length === 0) return <div>No past reads</div>;
@@ -34,5 +34,14 @@ export default function PastReads() {
         </li>
       ))}
     </ul>
+  );
+}
+
+export default function PastReads() {
+  return (
+    <div>
+      <h2 className="text-xl">Past reads</h2>
+      <Content />
+    </div>
   );
 }
