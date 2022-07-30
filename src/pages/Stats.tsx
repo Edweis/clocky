@@ -30,19 +30,22 @@ export default function Stats() {
   );
   const maxTime = max(timePerDay) || 1;
   return (
-    <div className="grid grid-cols-7 border border-black py-3">
-      {timePerDay.map((score, index) => (
-        <div key={index} className="flex flex-col justify-end">
-          <div className="flex flex-col">
-            <span className="self-center">{round(score / 60)}</span>
-            <div
-              style={{ height: (score / maxTime) * 100 }}
-              className="bg-blue-700 rounded-md w-4 self-center"
-            ></div>
+    <div>
+      <h2 className="text-xl">Stats</h2>
+      <div className="grid grid-cols-7 border border-black py-3">
+        {timePerDay.map((score, index) => (
+          <div key={index} className="flex flex-col justify-end">
+            <div className="flex flex-col">
+              <span className="self-center">{round(score / 60)}</span>
+              <div
+                style={{ height: (score / maxTime) * 100 }}
+                className="bg-blue-700 rounded-md w-4 self-center"
+              ></div>
+            </div>
+            <div className=" text-center">{DAYS[LAST_DAYS[index]]}</div>
           </div>
-          <div className=" text-center">{DAYS[LAST_DAYS[index]]}</div>
-        </div>
-      ))}
+        ))}
+      </div>
     </div>
   );
 }

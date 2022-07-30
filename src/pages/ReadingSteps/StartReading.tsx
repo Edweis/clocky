@@ -26,11 +26,10 @@ export default function StartReading(props: {
   }, [props.reading]);
 
   return (
-    <div className="grid gap-3">
+    <div className="grid gap-3 justify-center">
       <Input
         label="Book name"
         type="text"
-        className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
         placeholder="Harry Potter and the Order of the Phoenix"
         {...form.register('book')}
       />
@@ -38,7 +37,6 @@ export default function StartReading(props: {
         label="Page start"
         type="number"
         autoFocus
-        className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
         placeholder="130"
         inputMode="decimal"
         {...form.register('startPage')}

@@ -7,6 +7,7 @@ import PastReads from './PastReads';
 import Stats from './Stats';
 import '../lib/auth';
 import Reader from './Reader';
+import Login from './Login/Register';
 
 dayjs.extend(relativeTime);
 
@@ -21,12 +22,13 @@ function App() {
         <Link to="/stats">
           <ChartBarIcon />
         </Link>
-        <Link to="/">
+        <Link to="/login">
           <UserIcon />
         </Link>
       </h3>
       <div className="grid gap-4">
         <Routes>
+          <Route path="/login" element={<Login />} />
           <Route path="/past" element={<PastReads />} />
           <Route path="/stats" element={<Stats />} />
           <Route path="/" element={<Reader />} />

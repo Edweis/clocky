@@ -15,7 +15,7 @@ const Input = React.forwardRef((props: Props, ref) => {
         <input
           ref={ref as any}
           className={cn(
-            'shadow-sm focus:ring-blue-700 focus:border-blue-700 block w-full sm:text-sm border-gray-300 rounded-md',
+            'w-[15rem] shadow-sm focus:ring-blue-700 focus:border-blue-700 block  sm:text-sm border-gray-300 rounded-md',
             className,
           )}
           {...otherProps}

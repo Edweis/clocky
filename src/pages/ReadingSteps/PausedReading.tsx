@@ -28,7 +28,6 @@ export default function PausedReading(props: {
         type="number"
         autoFocus
         inputMode="decimal"
-        className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
         placeholder={`Started from page ${reading.startPage.toString()} until page ...`}
         {...form.register('endPage')}
       />
