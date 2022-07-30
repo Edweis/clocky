@@ -2,25 +2,23 @@ import React from 'react';
 import cn from 'classnames';
 
 type Props = React.InputHTMLAttributes<HTMLInputElement> & {
-  className?: string;
-  label: string;
-  autoSelect?: boolean;
+  errorMessage?: string;
 };
 const Input = React.forwardRef((props: Props, ref) => {
-  const { className, label, ...otherProps } = props;
+  const { className, errorMessage, ...otherProps } = props;
   return (
     <div>
-      <label className="block text-sm font-medium text-gray-700">{label}</label>
-      <div className="mt-1">
-        <input
-          ref={ref as any}
-          className={cn(
-            'w-[15rem] shadow-sm focus:ring-blue-700 focus:border-blue-700 block  sm:text-sm border-gray-300 rounded-md',
-            className,
-          )}
-          {...otherProps}
-        />
-      </div>
+      <input
+        ref={ref as any}
+        className={cn(
+          'w-full shadow-sm focus:ring-blue-700 focus:border-blue-700 block  sm:text-sm border-gray-300 rounded-md',
+          className,
+        )}
+        {...otherProps}
+      />
+      {errorMessage && (
+        <div className="w-full text-red-700">{errorMessage}</div>
+      )}
     </div>
   );
 });

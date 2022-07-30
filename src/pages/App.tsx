@@ -7,23 +7,23 @@ import PastReads from './PastReads';
 import Stats from './Stats';
 import '../lib/auth';
 import Reader from './Reader';
-import Login from './Login/Register';
+import Login from './Login/SignIn';
 
 dayjs.extend(relativeTime);
 
 function App() {
   return (
     <div className="container mx-auto pt-2 px-2 bg-yellow-400">
-      <h1 className="text-5xl my-4">clocky</h1>
-      <h3 className="flex gap-4 text-xl">
+      <h1 className="text-5xl my-4 text-center">clocky</h1>
+      <h3 className="flex gap-4 justify-center">
         <Link to="/">
-          <BookOpenIcon />
+          <BookOpenIcon className="h-10" />
         </Link>
         <Link to="/stats">
-          <ChartBarIcon />
+          <ChartBarIcon className="h-10" />
         </Link>
         <Link to="/login">
-          <UserIcon />
+          <UserIcon className="h-10" />
         </Link>
       </h3>
       <div className="grid gap-4">
