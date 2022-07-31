@@ -1,10 +1,5 @@
 /* eslint-disable no-unused-vars */
-import React, {
-  startTransition,
-  useState,
-  useCallback,
-  useEffect,
-} from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 
 export default function useLoading<T, R extends Array<any>>(
   fn: (...args: R) => Promise<T>,
@@ -15,9 +10,9 @@ export default function useLoading<T, R extends Array<any>>(
   const wrappedFunction = (...args: R) => {
     setLoading(true);
     const call = fn(...args);
-    console.log('fn started');
     return call
       .then((res) => {
+        console.log('fn done, setting to false');
         setLoading(false);
         return res;
       })

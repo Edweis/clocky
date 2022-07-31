@@ -21,13 +21,14 @@ export default function Login() {
   const [error, setError] = useState<string | undefined>();
   const [loading, signIn] = useLoading(
     form.handleSubmit(async (data: FromT) => {
-      console.log('clicked');
-      setError(undefined);
+      console.log('clicked SHOULD ALREADY BE LOADING !');
       await Auth.signIn(data).catch((e) => setError(e.message));
+      console.log('----------Async done');
     }),
   );
+  console.log('SignIn', { loading });
   return (
-    <div className="h-[40vh] flex flex-col justify-center">
+    <div className="">
       <div className="grid gap-3 justify-center">
         <h2 className="text-xl text-center">Login</h2>
         <Input
