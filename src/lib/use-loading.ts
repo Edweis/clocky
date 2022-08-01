@@ -1,18 +1,16 @@
 /* eslint-disable no-unused-vars */
-import React, { useState, useCallback, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 
 export default function useLoading<T, R extends Array<any>>(
   fn: (...args: R) => Promise<T>,
   initialLoadingState = false,
 ): [boolean, (...args: R) => Promise<T>] {
   const [loading, setLoading] = useState(initialLoadingState);
-  console.log('useLoading', { loading });
   const wrappedFunction = (...args: R) => {
     setLoading(true);
     const call = fn(...args);
     return call
       .then((res) => {
-        console.log('fn done, setting to false');
         setLoading(false);
         return res;
       })

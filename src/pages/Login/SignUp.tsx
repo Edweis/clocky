@@ -11,26 +11,24 @@ const schema = yup
   .object({
     username: yup.string().email().required(),
     password: yup.string().min(8).required(),
+    confirmation: yup
+      .string()
+      .oneOf([yup.ref('password')], 'Passwords must match')
+      .required(),
   })
   .required();
 type FromT = yup.InferType<typeof schema>;
-export default function SignIn() {
+export default function SignUp() {
   const form = useForm<FromT>({
     resolver: yupResolver(schema),
   });
   const [error, setError] = useState<string | undefined>();
-  const [loading, signIn] = useLoading(
-    form.handleSubmit(
-      async (data: FromT) =>
-        new Promise<void>((res) => {
-          setTimeout(() => {
-            Auth.signIn(data)
-              .catch((e) => setError(e.message))
-              .then(res);
-          }, 10); // signIn has a lot of computation which defers the rendering. We use a small timeout to prioritize the rendering over the expensive computation
-        }),
+  const [loading, signUp] = useLoading(
+    form.handleSubmit((data: FromT) =>
+      Auth.signUp(data).catch((e) => setError(e.message)),
     ),
   );
+  console.log({ error, loading });
   return (
     <div className="grid gap-3 justify-center">
       <Input
@@ -47,8 +45,14 @@ export default function SignIn() {
         {...form.register('password')}
         errorMessage={form.formState.errors.password?.message}
       />
-      <Button onClick={signIn} loading={loading}>
-        Sign In
+      <Input
+        placeholder="Verify Passsword"
+        type="password"
+        {...form.register('confirmation')}
+        errorMessage={form.formState.errors.confirmation?.message}
+      />
+      <Button onClick={signUp} loading={loading}>
+        Sign Up
       </Button>
       {error && <div className="text-red-700">{error}</div>}
     </div>
