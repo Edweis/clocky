@@ -13,7 +13,7 @@ dayjs.extend(relativeTime);
 
 function App() {
   return (
-    <div className="container mx-auto pt-2 px-2">
+    <div className="container mx-auto pt-2 px-2 bg-yellow-400">
       <div>
         <h1 className="text-5xl my-4 text-center">clocky</h1>
         <h3 className="flex gap-4 justify-center">

@@ -36,7 +36,6 @@ export default function SignIn() {
       <Input
         placeholder="Email"
         type="email"
-        autoFocus
         inputMode="email"
         {...form.register('username')}
         errorMessage={form.formState.errors.username?.message}
