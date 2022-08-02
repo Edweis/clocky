@@ -36,7 +36,7 @@ export default function SignIn() {
   return (
     <div className="grid gap-3 ">
       <Input
-        placeholder="Email"
+        placeholder="Username"
         type="text"
         {...form.register('username')}
         errorMessage={form.formState.errors.username?.message}
