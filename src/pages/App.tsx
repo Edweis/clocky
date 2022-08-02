@@ -9,6 +9,7 @@ import Reader from './Reader';
 import Login from './Login';
 import Navbar from '../components/Navbar';
 import { ReadingsContext, useReadingsInit } from '../lib/reading-api';
+import Account from './Account';
 
 dayjs.extend(relativeTime);
 
@@ -23,6 +24,7 @@ function WithAuth() {
           <Routes>
             <Route path="/login" element={<Login />} />
             <Route path="/stats" element={<Stats />} />
+            <Route path="/account" element={<Account />} />
             <Route path="/" element={<Reader />} />
             <Route path="*" element={<Navigate to="/" />} />
           </Routes>
