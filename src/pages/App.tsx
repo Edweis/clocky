@@ -22,7 +22,6 @@ function WithAuth() {
         <div className="grid gap-4">
           <Routes>
             <Route path="/login" element={<Login />} />
-            <Route path="/past" element={<PastReads />} />
             <Route path="/stats" element={<Stats />} />
             <Route path="/" element={<Reader />} />
             <Route path="*" element={<Navigate to="/" />} />

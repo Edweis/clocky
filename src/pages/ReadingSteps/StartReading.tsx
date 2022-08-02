@@ -26,18 +26,12 @@ export default function StartReading(props: {
   }, [props.reading]);
 
   return (
-    <div className="grid gap-3 justify-center">
+    <div className="grid gap-3">
+      <Input type="text" placeholder="Book name" {...form.register('book')} />
       <Input
-        label="Book name"
-        type="text"
-        placeholder="Harry Potter and the Order of the Phoenix"
-        {...form.register('book')}
-      />
-      <Input
-        label="Page start"
         type="number"
         autoFocus
-        placeholder="130"
+        placeholder="Page Start"
         inputMode="decimal"
         {...form.register('startPage')}
       />

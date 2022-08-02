@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useReadings } from '../../lib/reading-api';
 import { ReadingStep } from '../../types';
+import PastReads from '../PastReads';
 import PausedReading from '../ReadingSteps/PausedReading';
 import ReadingProgress from '../ReadingSteps/ReadingProgress';
 import StartReading from '../ReadingSteps/StartReading';
@@ -48,8 +49,9 @@ function Content() {
 
 export default function Reader() {
   return (
-    <div className="h-[40vh] flex flex-col justify-center">
+    <div className="flex flex-col justify-center">
       <Content />
+      <PastReads />
     </div>
   );
 }
