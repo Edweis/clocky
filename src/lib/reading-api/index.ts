@@ -6,13 +6,15 @@ import {
   useState,
 } from 'react';
 import { Reading } from '../../types';
+import { useAuth } from '../auth';
 import { useLoadingEffect } from '../use-loading';
 import { getLocalDb, setLocalDb } from './local-db';
+import { setRemoteDb } from './remote-db';
 
 export function useReadingsInit() {
   const [readings, setReadings] = useState<Reading[]>([]);
-  // const { user } = useAuth();
-  // const sub = user?.attributes.sub || 'unauth';
+  const { user } = useAuth();
+  const sub = user?.attributes.sub;
   const loading = useLoadingEffect(async () => {
     const nextDb = await getLocalDb<Reading[]>('readings');
     console.log('nextDb:', nextDb);
@@ -22,7 +24,10 @@ export function useReadingsInit() {
     setReadings((r) => [...r, reading]);
   }, []);
   useEffect(() => {
-    if (readings.length > 0) setLocalDb('readings', readings);
+    // push readings to local/remote database
+    if (readings.length === 0) return;
+    setLocalDb('readings', readings);
+    if (sub) setRemoteDb(`${sub}/readings.json`, readings);
   }, [readings]);
   return { readings, pushReading } as const;
 }
