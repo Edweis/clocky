@@ -31,12 +31,12 @@ export const setRemoteDb = async (path: string, db: Reading[]) => {
   const s3 = new S3Client({ credentials, region: REGION });
   const sub = credentials.identityId;
   const key = `${REMOTE_DB_BASE}/${sub}/${path}`;
-  // const object = await s3.send(
-  //   new PutObjectCommand({
-  //     Bucket: BUCKET,
-  //     Key: key,
-  //     Body: JSON.stringify(db),
-  //   }),
-  // );
-  return 'etag'; // object.ETag;
+  const object = await s3.send(
+    new PutObjectCommand({
+      Bucket: BUCKET,
+      Key: key,
+      Body: JSON.stringify(db),
+    }),
+  );
+  return object.ETag;
 };

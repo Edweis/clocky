@@ -15,22 +15,19 @@ export function useReadingsInit() {
   const [readings, setReadings] = useState<Reading[]>([]);
   const { user } = useAuth();
   const loading = useLoadingEffect(async () => {
-    const nextDb = await getLocalDb<Reading[]>('readings/data');
-    const nextEtag = await getLocalDb<string>('readings/etag');
-    console.log('nextDb:', { nextDb, nextEtag });
+    const nextDb = await getLocalDb<Reading[]>('readings');
+    console.log('nextDb:', { nextDb });
     setReadings(nextDb || []);
   }, []);
-  const pushReading = useCallback(async (reading: Reading) => {
-    setReadings((r) => [...r, reading]);
-  }, []);
-  useEffect(() => {
-    if (readings.length === 0) return;
-    // push readings to local database
-    setLocalDb('readings', readings);
-    if (user == null) return;
-    // push readings to remote database
-    setRemoteDb(`readings.json`, readings);
-  }, [readings]);
+  const pushReading = useCallback(
+    async (reading: Reading) => {
+      const nextReadings = [...readings, reading];
+      setReadings(nextReadings);
+      await setLocalDb('readings', nextReadings);
+      await setRemoteDb(`readings.json`, nextReadings);
+    },
+    [readings],
+  );
   useEffect(() => {
     if (user == null) return;
     getRemoteDb('readings.json').then((nextDb) => setReadings(nextDb));
