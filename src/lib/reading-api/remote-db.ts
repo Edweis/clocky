@@ -8,32 +8,35 @@ import { Reading } from '../../types';
 import { REGION } from '../aws-constants';
 import { ReadingDb } from './types';
 
-const getClient = async () => {
-  const credentials = await Auth.currentCredentials();
-  return new S3Client({ credentials, region: REGION });
-};
 const BUCKET = import.meta.env.PROD
   ? 'clocky-database-prod'
   : 'clocky-database-dev';
 const REMOTE_DB_BASE = 'users';
 export const getRemoteDb = async (path: string) => {
-  const s3 = await getClient();
-  const key = `${REMOTE_DB_BASE}/${path}`;
+  const credentials = await Auth.currentCredentials();
+  const s3 = new S3Client({ credentials, region: REGION });
+  const sub = credentials.identityId;
+  const key = `${REMOTE_DB_BASE}/${sub}/${path}`;
   const object = await s3.send(
     new GetObjectCommand({ Bucket: BUCKET, Key: key }),
   );
   console.log('getRemoteDb', object, typeof object);
-  return JSON.parse(object.Body as any) as ReadingDb;
+  const stream = object.Body as ReadableStream;
+  const reader = await stream.getReader().read();
+  const str = new TextDecoder().decode(reader.value as any) as string;
+  return JSON.parse(str) as Reading[];
 };
 export const setRemoteDb = async (path: string, db: Reading[]) => {
-  const s3 = await getClient();
-  const key = `${REMOTE_DB_BASE}/${path}`;
-  const object = await s3.send(
-    new PutObjectCommand({
-      Bucket: BUCKET,
-      Key: key,
-      Body: JSON.stringify(db),
-    }),
-  );
-  return object.ETag;
+  const credentials = await Auth.currentCredentials();
+  const s3 = new S3Client({ credentials, region: REGION });
+  const sub = credentials.identityId;
+  const key = `${REMOTE_DB_BASE}/${sub}/${path}`;
+  // const object = await s3.send(
+  //   new PutObjectCommand({
+  //     Bucket: BUCKET,
+  //     Key: key,
+  //     Body: JSON.stringify(db),
+  //   }),
+  // );
+  return 'etag'; // object.ETag;
 };
