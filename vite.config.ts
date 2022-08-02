@@ -9,7 +9,9 @@ export default defineConfig({
   test: {
     environment: 'jsdom',
   },
-  define: {
-    'global.TYPED_ARRAY_SUPPORT': JSON.stringify(true),
+  resolve: {
+    alias: {
+      './runtimeConfig': './runtimeConfig.browser',
+    },
   },
 });
