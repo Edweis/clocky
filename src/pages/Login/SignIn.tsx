@@ -32,7 +32,7 @@ export default function SignIn() {
     ),
   );
   return (
-    <div className="grid gap-3 justify-center">
+    <div className="grid gap-3 ">
       <Input
         placeholder="Email"
         type="email"
@@ -47,7 +47,7 @@ export default function SignIn() {
         errorMessage={form.formState.errors.password?.message}
       />
       <Button onClick={signIn} loading={loading}>
-        Sign In
+        Sign me in
       </Button>
       {error && <div className="text-red-700">{error}</div>}
     </div>

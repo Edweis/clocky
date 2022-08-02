@@ -9,7 +9,8 @@ export default function Button(
     <button
       type="button"
       className={cn(
-        'h-[42px] text-center items-center px-6 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-black hover:bg-gray-800 focus:outline-none focus:ring-4 focus:ring-offset-2 focus:ring-indigo-500',
+        'h-[42px] text-center items-center px-6 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-black ',
+        'disabled:text-gray-400 hover:bg-gray-800 focus:outline-none focus:ring-4 focus:ring-offset-2 focus:ring-indigo-500',
         className,
         { 'flex justify-center': loading },
       )}

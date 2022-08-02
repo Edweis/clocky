@@ -8,13 +8,16 @@ import Stats from './Stats';
 import '../lib/auth';
 import Reader from './Reader';
 import Login from './Login';
+import Navbar from '../components/Menu';
 
 dayjs.extend(relativeTime);
 
 function App() {
   return (
-    <div className="container mx-auto pt-2 px-2 bg-yellow-400">
-      <div>
+    <>
+      <Navbar />
+      <div className="container mx-auto pt-2 px-4 bg-yellow-400">
+        {/* <div>
         <h1 className="text-5xl my-4 text-center">clocky</h1>
         <h3 className="flex gap-4 justify-center">
           <Link to="/">
@@ -27,17 +30,18 @@ function App() {
             <UserIcon className="h-10" />
           </Link>
         </h3>
+      </div> */}
+        <div className="grid gap-4">
+          <Routes>
+            <Route path="/login" element={<Login />} />
+            <Route path="/past" element={<PastReads />} />
+            <Route path="/stats" element={<Stats />} />
+            <Route path="/" element={<Reader />} />
+            <Route path="*" element={<Navigate to="/" />} />
+          </Routes>
+        </div>
       </div>
-      <div className="grid gap-4">
-        <Routes>
-          <Route path="/login" element={<Login />} />
-          <Route path="/past" element={<PastReads />} />
-          <Route path="/stats" element={<Stats />} />
-          <Route path="/" element={<Reader />} />
-          <Route path="*" element={<Navigate to="/" />} />
-        </Routes>
-      </div>
-    </div>
+    </>
   );
 }
 export default App;

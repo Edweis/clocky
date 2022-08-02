@@ -3,9 +3,9 @@ import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { Auth } from '@aws-amplify/auth';
 import { useState } from 'react';
-import Button from '../../components/Button';
-import Input from '../../components/Input';
-import useLoading from '../../lib/use-loading';
+import Button from '../../../components/Button';
+import Input from '../../../components/Input';
+import useLoading from '../../../lib/use-loading';
 
 const schema = yup
   .object({
@@ -17,20 +17,30 @@ const schema = yup
       .required(),
   })
   .required();
-type FromT = yup.InferType<typeof schema>;
-export default function SignUp() {
-  const form = useForm<FromT>({
+
+type FormT = yup.InferType<typeof schema>;
+export default function Register(props: {
+  onSubmit: (username: string) => void;
+}) {
+  const form = useForm<FormT>({
     resolver: yupResolver(schema),
   });
   const [error, setError] = useState<string | undefined>();
   const [loading, signUp] = useLoading(
-    form.handleSubmit((data: FromT) =>
-      Auth.signUp(data).catch((e) => setError(e.message)),
+    form.handleSubmit((data) =>
+      Auth.signUp({
+        username: data.username,
+        password: data.password,
+        attributes: { email: data.username },
+        autoSignIn: { enabled: true },
+      })
+        .then(() => props.onSubmit(data.username))
+        .catch((e) => setError(e.message)),
     ),
   );
   console.log({ error, loading });
   return (
-    <div className="grid gap-3 justify-center">
+    <div className="grid gap-3">
       <Input
         placeholder="Email"
         type="email"
@@ -52,7 +62,7 @@ export default function SignUp() {
         errorMessage={form.formState.errors.confirmation?.message}
       />
       <Button onClick={signUp} loading={loading}>
-        Sign Up
+        Send me the link
       </Button>
       {error && <div className="text-red-700">{error}</div>}
     </div>
