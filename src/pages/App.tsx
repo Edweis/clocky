@@ -8,13 +8,15 @@ import { AuthContext, useAuthInit } from '../lib/auth';
 import Reader from './Reader';
 import Login from './Login';
 import Navbar from '../components/Navbar';
+import { ReadingsContext, useReadingsInit } from '../lib/reading-api';
 
 dayjs.extend(relativeTime);
 
-function App() {
-  const auth = useAuthInit();
+function WithAuth() {
+  const readings = useReadingsInit();
+
   return (
-    <AuthContext.Provider value={auth}>
+    <ReadingsContext.Provider value={readings}>
       <Navbar />
       <div className="container mx-auto pt-2 px-4 bg-yellow-400">
         <div className="grid gap-4">
@@ -27,7 +29,14 @@ function App() {
           </Routes>
         </div>
       </div>
+    </ReadingsContext.Provider>
+  );
+}
+export default function App() {
+  const auth = useAuthInit();
+  return (
+    <AuthContext.Provider value={auth}>
+      <WithAuth />
     </AuthContext.Provider>
   );
 }
-export default App;

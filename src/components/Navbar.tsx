@@ -68,6 +68,7 @@ export default function Navbar() {
             <div className="pt-2 pb-4 space-y-1">
               {MENU.map((m) => (
                 <Disclosure.Button
+                  key={m.to}
                   as={Link}
                   to={m.to}
                   className={cn(MOBILE_MENU, {

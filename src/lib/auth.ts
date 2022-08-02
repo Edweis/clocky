@@ -1,5 +1,4 @@
 import { Auth } from '@aws-amplify/auth';
-import { Amplify } from '@aws-amplify/core';
 import {
   createContext,
   useCallback,
@@ -7,15 +6,14 @@ import {
   useEffect,
   useState,
 } from 'react';
-import { APP_CLIENT_ID, USER_POOL_ID, REGION } from './aws-constants';
+import { APP_CLIENT_ID, USER_POOL_ID, REGION, IDP_ID } from './aws-constants';
 
-Amplify.configure({
-  Auth: {
-    mandatorySignIn: true,
-    region: REGION,
-    userPoolId: USER_POOL_ID,
-    userPoolWebClientId: APP_CLIENT_ID,
-  },
+Auth.configure({
+  mandatorySignIn: true,
+  region: REGION,
+  userPoolId: USER_POOL_ID,
+  userPoolWebClientId: APP_CLIENT_ID,
+  identityPoolId: IDP_ID,
 });
 export type ConnectedUser = {
   username: string;

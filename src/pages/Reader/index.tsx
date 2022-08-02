@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import useReadings from '../../lib/reading-api';
+import { useReadings } from '../../lib/reading-api';
 import { ReadingStep } from '../../types';
 import PausedReading from '../ReadingSteps/PausedReading';
 import ReadingProgress from '../ReadingSteps/ReadingProgress';
@@ -8,7 +8,7 @@ import StartReading from '../ReadingSteps/StartReading';
 const DEFAULT_READING = { book: 'Your first book', endPage: 1 };
 
 function Content() {
-  const [{ readings }, pushReading] = useReadings();
+  const { readings, pushReading } = useReadings();
   const lastReading = readings[readings.length - 1] || DEFAULT_READING;
   const DEFAULT_STEP = {
     state: 'ready' as const,
