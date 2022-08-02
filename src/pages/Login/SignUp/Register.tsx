@@ -9,7 +9,8 @@ import useLoading from '../../../lib/use-loading';
 
 const schema = yup
   .object({
-    username: yup.string().email().required(),
+    email: yup.string().email().required(),
+    username: yup.string().min(6).max(16).required(),
     password: yup.string().min(8).required(),
     confirmation: yup
       .string()
@@ -31,22 +32,27 @@ export default function Register(props: {
       Auth.signUp({
         username: data.username,
         password: data.password,
-        attributes: { email: data.username },
+        attributes: { email: data.email },
         autoSignIn: { enabled: true },
       })
         .then(() => props.onSubmit(data.username))
         .catch((e) => setError(e.message)),
     ),
   );
-  console.log({ error, loading });
   return (
     <div className="grid gap-3">
       <Input
+        placeholder="Username"
+        type="text"
+        autoFocus
+        {...form.register('username')}
+        errorMessage={form.formState.errors.username?.message}
+      />
+      <Input
         placeholder="Email"
         type="email"
-        autoFocus
         inputMode="email"
-        {...form.register('username')}
+        {...form.register('email')}
         errorMessage={form.formState.errors.username?.message}
       />
       <Input

@@ -7,6 +7,7 @@ import { Router, useNavigate, useRoutes } from 'react-router-dom';
 import Button from '../../../components/Button';
 import Input from '../../../components/Input';
 import useLoading from '../../../lib/use-loading';
+import { useAuth } from '../../../lib/auth';
 
 const schema = yup
   .object({ code: yup.string().min(6).max(6).required() })
@@ -18,6 +19,7 @@ export default function Challenge(props: {
   onSubmit: () => void;
 }) {
   const navigate = useNavigate();
+  const { refreshUser } = useAuth();
   const form = useForm<FormT>({
     resolver: yupResolver(schema),
   });
@@ -27,11 +29,11 @@ export default function Challenge(props: {
       await Auth.confirmSignUp(props.username, data.code).catch((e) =>
         setError(e.message),
       );
+      await refreshUser();
       props.onSubmit();
       navigate('/');
     }),
   );
-  console.log({ error, loading });
   return (
     <div className="grid gap-3">
       <Input

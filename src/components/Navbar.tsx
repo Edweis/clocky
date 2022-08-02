@@ -2,23 +2,30 @@ import { Disclosure } from '@headlessui/react';
 import { MenuIcon, XIcon } from '@heroicons/react/outline';
 import cn from 'classnames';
 import { Link, useLocation } from 'react-router-dom';
+import { useAuth } from '../lib/auth';
 
 const DESKTOP_MENU =
   'border-transparent text-gray-700 hover:border-blue-300 hover:text-black inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium';
 const DESKTOP_MENU_SELECTED = 'border-blue-500 text-blue-700';
 const MOBILE_MENU =
-  'border-transparent text-gray-500 hover:bg-black hover:border-blue-300 hover:text-white block pl-3 pr-4 py-2 border-l-4 text-base font-medium';
-const MOBILE_MENU_SELECTED = ' border-blue-500 text-blue-700';
-const MENU = [
-  { label: 'Start', to: '/' },
-  { label: 'Statistics', to: '/stats' },
-  { label: 'Login', to: '/login' },
-];
+  'border-transparent text-black hover:bg-black hover:border-white hover:text-white block pl-3 pr-4 py-2 border-l-4 text-base font-medium';
+const MOBILE_MENU_SELECTED = 'border-blue-500 text-blue-700';
+
+type NavbarItem = { label: string; to: string };
 export default function Navbar() {
   const location = useLocation();
-  console.log({ location });
+  const auth = useAuth();
+  const MENU = [
+    { label: 'Start', to: '/' },
+    { label: 'Statistics', to: '/stats' },
+    auth.user != null && {
+      label: `Account - ${auth.user.username}`,
+      to: '/account',
+    },
+    auth.user == null && { label: 'Login', to: '/login' },
+  ].filter((item): item is NavbarItem => item !== false);
   return (
-    <Disclosure as="nav" className="">
+    <Disclosure as="nav">
       {({ open }) => (
         <>
           <div className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">

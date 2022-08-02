@@ -9,7 +9,6 @@ const DEFAULT_READING = { book: 'Your first book', endPage: 1 };
 
 function Content() {
   const [{ readings }, pushReading] = useReadings();
-  console.log({ readings });
   const lastReading = readings[readings.length - 1] || DEFAULT_READING;
   const DEFAULT_STEP = {
     state: 'ready' as const,

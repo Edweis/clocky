@@ -18,4 +18,5 @@ export default function SignUp() {
         onSubmit={() => setState({ state: 'register' })}
       />
     );
+  throw Error('Unexpected');
 }
