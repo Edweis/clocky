@@ -2,7 +2,6 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 import './App.css';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
-import PastReads from './PastReads';
 import Stats from './Stats';
 import { AuthContext, useAuthInit } from '../lib/auth';
 import Reader from './Reader';
