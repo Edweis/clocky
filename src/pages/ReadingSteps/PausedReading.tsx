@@ -24,11 +24,10 @@ export default function PausedReading(props: {
   return (
     <div className="grid gap-4">
       <Input
-        label="End Page"
         type="number"
         autoFocus
         inputMode="decimal"
-        placeholder={`Started from page ${reading.startPage.toString()} until page ...`}
+        placeholder={`Read from page ${reading.startPage.toString()} until page ...`}
         {...form.register('endPage')}
       />
       <div className="flex justify-center">
