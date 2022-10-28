@@ -1,7 +1,6 @@
 import { safeJsonParse, setEagerInterval } from './helpers';
 import { getRemoteDb, setRemoteDb } from './remote-db';
 import Subscriber from './subscriber';
-
 // eslint-disable-next-line
 const cache = new Map<string, Sangria<unknown>>();
 
@@ -13,12 +12,6 @@ export default class Sangria<T> extends Subscriber<T> {
     this.path = `sangria-${path}`;
     setEagerInterval(this.path, () => this.syncRemote(), period);
   }
-
-  // static path<T>(path: string, period = 5000) {
-  //   const cached = cache.get(path);
-  //   if (cached) return cached as Sangria<T>;
-  //   return new Sangria<T>(path, period);
-  // }
 
   // CRUD
   get(): T[] {

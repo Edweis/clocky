@@ -10,25 +10,11 @@ export class SangriaReact<T> extends Sangria<T> {
 
   // eslint-disable-next-line class-methods-use-this
   useDataInit() {
+    // This can be fancier using
+    // https://github.com/TanStack/query/blob/f6eeab079d88df811fd827767db1457083e85b01/packages/query-core/src/onlineManager.ts
+    // and https://github.com/TanStack/query/blob/f6eeab079d88df811fd827767db1457083e85b01/packages/query-core/src/focusManager.ts
     const [, setData] = useState<T[]>([]);
-    useEffect(() => {
-      const id = this.subscribe((data) => setData(data));
-      return () => this.unsubscribe(id);
-    });
+    useEffect(() => this.subscribe((data) => setData(data)));
     return this;
   }
 }
-
-// export const ReadingContext = createContext<Reading[]>([]);
-// export function useReadingsInit() {
-//   const [data, setData] = useState([]);
-//   const sangria = Sangria.path<Reading>('readings', 5000);
-//   useEffect(() => {
-//     const id = sangria.subscribe((data) => setReadings(data));
-//     return () => sangria.unsubscribe(id);
-//   });
-//   return { data, sangria };
-// }
-// export function useReadings() {
-//   return useContext(ReadingContext);
-// }
