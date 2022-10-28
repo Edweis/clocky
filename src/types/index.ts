@@ -19,3 +19,6 @@ export namespace ReadingStep {
 export type Reading = ReadingStep.Paused & {
   endPage: number;
 };
+
+export type DbObject<T> = { data: T; etag: string };
+export type ReadingDb = DbObject<Reading[]>;

@@ -20,7 +20,6 @@ export default function StartReading(props: {
     defaultValues: props.reading,
     resolver: yupResolver(schema),
   });
-  console.log('StartReading', props);
   useEffect(() => {
     form.reset(props.reading);
   }, [props.reading]);

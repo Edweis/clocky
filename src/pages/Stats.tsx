@@ -1,6 +1,6 @@
 import dayjs from 'dayjs';
 import { groupBy, mapValues, max, round, sum } from 'lodash-es';
-import { useReadings } from '../lib/reading-api';
+import { SangriaReadings } from '../lib/use-readings';
 
 const DAYS = [
   'Sunday',
@@ -12,7 +12,7 @@ const DAYS = [
   'Saturday',
 ].map((d) => d.slice(0, 3));
 export default function Stats() {
-  const { readings } = useReadings();
+  const readings = SangriaReadings.useData();
 
   const todayDow = dayjs().day();
   const LAST_DAYS = Array(7)

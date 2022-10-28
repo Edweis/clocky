@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
-import { useReadings } from '../../lib/reading-api';
+import Sangria from '../../lib/sangria';
+import { SangriaReadings } from '../../lib/use-readings';
 import { ReadingStep } from '../../types';
 import PastReads from '../PastReads';
 import PausedReading from '../ReadingSteps/PausedReading';
@@ -9,7 +10,7 @@ import StartReading from '../ReadingSteps/StartReading';
 const DEFAULT_READING = { book: 'Your first book', endPage: 1 };
 
 function Content() {
-  const { readings, pushReading } = useReadings();
+  const readings = SangriaReadings.useData();
   const lastReading = readings[readings.length - 1] || DEFAULT_READING;
   const DEFAULT_STEP = {
     state: 'ready' as const,
@@ -38,7 +39,7 @@ function Content() {
     return (
       <PausedReading
         onSubmit={(data) => {
-          pushReading(data);
+          SangriaReadings.append(data);
           setStep({ state: 'ready', data });
         }}
         reading={step.data}

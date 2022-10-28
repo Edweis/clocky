@@ -4,16 +4,19 @@ import {
   PutObjectCommand,
   S3Client,
 } from '@aws-sdk/client-s3';
-import { Reading } from '../../types';
 import { REGION } from '../aws-constants';
-import { ReadingDb } from './types';
 
 const BUCKET = import.meta.env.PROD
   ? 'clocky-database-prod'
   : 'clocky-database-dev';
 const REMOTE_DB_BASE = 'users';
-export const getRemoteDb = async (path: string) => {
+export const getRemoteDb = async <T>(path: string) => {
   const credentials = await Auth.currentCredentials();
+  console.log({
+    credentials,
+    currentSession: await Auth.currentSession(),
+    user: await Auth.currentUserInfo(),
+  });
   const s3 = new S3Client({ credentials, region: REGION });
   const sub = credentials.identityId;
   const key = `${REMOTE_DB_BASE}/${sub}/${path}`;
@@ -24,9 +27,10 @@ export const getRemoteDb = async (path: string) => {
   const stream = object.Body as ReadableStream;
   const reader = await stream.getReader().read();
   const str = new TextDecoder().decode(reader.value as any) as string;
-  return JSON.parse(str) as Reading[];
+  return JSON.parse(str) as T[];
 };
-export const setRemoteDb = async (path: string, db: Reading[]) => {
+/** If this fail, you are probably logged out or offline */
+export const setRemoteDb = async <T>(path: string, db: T[]) => {
   const credentials = await Auth.currentCredentials();
   const s3 = new S3Client({ credentials, region: REGION });
   const sub = credentials.identityId;

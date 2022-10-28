@@ -7,16 +7,14 @@ import { AuthContext, useAuthInit } from '../lib/auth';
 import Reader from './Reader';
 import Login from './Login';
 import Navbar from '../components/Navbar';
-import { ReadingsContext, useReadingsInit } from '../lib/reading-api';
 import Account from './Account';
+import { SangriaReadings } from '../lib/use-readings';
 
 dayjs.extend(relativeTime);
-
 function WithAuth() {
-  const readings = useReadingsInit();
-
+  const readings = SangriaReadings.useDataInit();
   return (
-    <ReadingsContext.Provider value={readings}>
+    <SangriaReadings.context.Provider value={readings.get()}>
       <Navbar />
       <div className="container mx-auto pt-2 px-4 bg-yellow-400">
         <div className="grid gap-4">
@@ -29,7 +27,7 @@ function WithAuth() {
           </Routes>
         </div>
       </div>
-    </ReadingsContext.Provider>
+    </SangriaReadings.context.Provider>
   );
 }
 export default function App() {
