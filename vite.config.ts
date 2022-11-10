@@ -2,24 +2,15 @@
 /** @type {import('vite').UserConfig} */
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
-// import { NodeGlobalsPolyfillPlugin } from '@esbuild-plugins/node-globals-polyfill';
-import rollupNodePolyFill from 'rollup-plugin-node-polyfills';
-import GlobalsPolyfills from '@esbuild-plugins/node-globals-polyfill';
-import nodePolyfills from 'rollup-plugin-polyfill-node';
+
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [react(), nodePolyfills()],
+  plugins: [react()],
   optimizeDeps: {
     esbuildOptions: {
       define: {
         global: 'globalThis',
       },
-      // plugins: [
-      //   GlobalsPolyfills({
-      //     process: true,
-      //     buffer: true,
-      //   }),
-      // ],
     },
   },
   test: {

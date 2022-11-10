@@ -19,8 +19,8 @@ export const readingAvroType = avro.Type.forSchema({
   fields: [
     { name: 'book', type: 'string' },
     { name: 'startPage', type: 'int' },
-    { name: 'startTime', type: 'int' },
-    { name: 'endTime', type: 'int' },
+    { name: 'startTime', type: 'long' },
+    { name: 'endTime', type: 'long' },
     { name: 'endPage', type: 'int' },
   ],
 });
