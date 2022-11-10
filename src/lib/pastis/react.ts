@@ -1,7 +1,7 @@
-import { createContext, useContext, useEffect, useMemo, useState } from 'react';
-import Sangria from '.';
+import { createContext, useContext, useEffect, useState } from 'react';
+import Pastis from '.';
 
-export class SangriaReact<T> extends Sangria<T> {
+export class PastisReact<T> extends Pastis<T> {
   context = createContext<T[]>([]);
 
   useData() {

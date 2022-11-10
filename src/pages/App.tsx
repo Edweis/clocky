@@ -8,13 +8,13 @@ import Reader from './Reader';
 import Login from './Login';
 import Navbar from '../components/Navbar';
 import Account from './Account';
-import { SangriaReadings } from '../lib/use-readings';
+import { PastisReadings } from '../lib/use-readings';
 
 dayjs.extend(relativeTime);
 function WithAuth() {
-  const readings = SangriaReadings.useDataInit();
+  const readings = PastisReadings.useDataInit();
   return (
-    <SangriaReadings.context.Provider value={readings.get()}>
+    <PastisReadings.context.Provider value={readings.get()}>
       <Navbar />
       <div className="container mx-auto pt-2 px-4 bg-yellow-400">
         <div className="grid gap-4">
@@ -27,7 +27,7 @@ function WithAuth() {
           </Routes>
         </div>
       </div>
-    </SangriaReadings.context.Provider>
+    </PastisReadings.context.Provider>
   );
 }
 export default function App() {

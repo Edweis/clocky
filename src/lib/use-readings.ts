@@ -1,8 +1,8 @@
 import avro from 'avsc';
 import { Reading } from '../types';
-import { SangriaReact } from './sangria/react';
+import { PastisReact } from './pastis/react';
 
-export const SangriaReadings = new SangriaReact<Reading>('readings', 10000);
+export const PastisReadings = new PastisReact<Reading>('readings', 10000);
 
 export const readingSchema = avro.Type.forSchema({
   type: 'record',

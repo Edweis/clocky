@@ -5,7 +5,7 @@ import { safeJsonParse, setEagerInterval } from './helpers';
 import { getRemoteDb, setRemoteDb } from './remote-db';
 import Subscriber from './subscriber';
 // eslint-disable-next-line
-const cache = new Map<string, Sangria<unknown>>();
+const cache = new Map<string, Pastis<unknown>>();
 
 function decodeAvroBuffer<T>(buffer: Buffer, type: avro.Type): T[] {
   let state = readingSchema.decode(buffer, 0);
@@ -16,12 +16,12 @@ function decodeAvroBuffer<T>(buffer: Buffer, type: avro.Type): T[] {
   }
   return result;
 }
-export default class Sangria<T> extends Subscriber<T> {
+export default class Pastis<T> extends Subscriber<T> {
   private path: string;
 
   constructor(path: string, refreshIntervalInMs: number) {
     super();
-    this.path = `sangria-${path}`;
+    this.path = `pastis-${path}`;
     setEagerInterval(this.path, () => this.syncRemote(), refreshIntervalInMs);
   }
 

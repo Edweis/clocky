@@ -1,6 +1,6 @@
 import dayjs from 'dayjs';
 import formatTime from '../lib/format-time';
-import { SangriaReadings } from '../lib/use-readings';
+import { PastisReadings } from '../lib/use-readings';
 import type { Reading } from '../types';
 
 const computeSpeed = (reading: Reading) => {
@@ -10,7 +10,7 @@ const computeSpeed = (reading: Reading) => {
   return (timeInMin / pages).toFixed(2);
 };
 export function Content() {
-  const readings = SangriaReadings.useData();
+  const readings = PastisReadings.useData();
   const reversed = [...readings].reverse();
   if (reversed.length === 0) return <div>No past reads</div>;
   return (
