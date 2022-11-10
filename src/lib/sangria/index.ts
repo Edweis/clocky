@@ -12,7 +12,7 @@ import Subscriber from './subscriber';
 // eslint-disable-next-line
 const cache = new Map<string, Sangria<unknown>>();
 
-function decodeAvroBuffer(buffer: Buffer, type: avro.Type) {
+function decodeAvroBuffer<T>(buffer: Buffer, type: avro.Type): T[] {
   let state = readingAvroType.decode(buffer, 0);
   const result = [];
   while (state.offset > 0) {
@@ -51,20 +51,17 @@ export default class Sangria<T> extends Subscriber<T> {
 
   // Remote
   private async syncRemote(): Promise<void> {
-    const remoteData = await getRemoteDb<T>(this.path).catch((error) => {
-      console.error('Failed safe:', error);
-      return [];
-    });
+    // const remoteData = await getRemoteDb<T>(this.path).catch((error) => {
+    //   console.error('Failed safe:', error);
+    //   return [];
+    // });
     const remoteDataAvro = await getRemoteDbRaw<T>(`${this.path}.avro`).catch(
       (error) => {
         console.error('AVRO Failed safe:', error);
         return Buffer.from('');
       },
     );
-    console.log({ remoteDataAvro }, readingAvroType.toBuffer(this.get()[0]));
-
-    const decodedAvro = decodeAvroBuffer(remoteDataAvro, readingAvroType);
-    console.log({ decodedAvro });
+    const remoteData = decodeAvroBuffer<T>(remoteDataAvro, readingAvroType);
 
     const localData = this.get();
     const localVersion = localData.length;
@@ -72,7 +69,7 @@ export default class Sangria<T> extends Subscriber<T> {
     console.log({ localVersion, remoteVersion });
     if (remoteVersion < localVersion) {
       console.log('XXXXXX');
-      await setRemoteDb(this.path, localData);
+      // await setRemoteDb(this.path, localData);
       const avroFile = Buffer.concat(
         localData.map((r) => readingAvroType.toBuffer(r)),
       );
