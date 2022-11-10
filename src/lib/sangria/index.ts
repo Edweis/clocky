@@ -1,6 +1,6 @@
 import { Buffer } from 'buffer';
 import type avro from 'avsc';
-import { readingAvroType } from '../use-readings';
+import { readingSchema } from '../use-readings';
 import { safeJsonParse, setEagerInterval } from './helpers';
 import { getRemoteDb, setRemoteDb } from './remote-db';
 import Subscriber from './subscriber';
@@ -8,7 +8,7 @@ import Subscriber from './subscriber';
 const cache = new Map<string, Sangria<unknown>>();
 
 function decodeAvroBuffer<T>(buffer: Buffer, type: avro.Type): T[] {
-  let state = readingAvroType.decode(buffer, 0);
+  let state = readingSchema.decode(buffer, 0);
   const result = [];
   while (state.offset > 0) {
     result.push(state.value);
@@ -52,7 +52,7 @@ export default class Sangria<T> extends Subscriber<T> {
         return Buffer.from('');
       },
     );
-    const remoteData = decodeAvroBuffer<T>(remoteDataAvro, readingAvroType);
+    const remoteData = decodeAvroBuffer<T>(remoteDataAvro, readingSchema);
 
     const localData = this.get();
     const localVersion = localData.length;
@@ -60,7 +60,7 @@ export default class Sangria<T> extends Subscriber<T> {
     console.log({ localVersion, remoteVersion });
     if (remoteVersion < localVersion) {
       const avroFile = Buffer.concat(
-        localData.map((r) => readingAvroType.toBuffer(r)),
+        localData.map((r) => readingSchema.toBuffer(r)),
       );
       await setRemoteDb(`${this.path}.avro`, avroFile);
     }

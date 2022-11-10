@@ -4,18 +4,9 @@ import { SangriaReact } from './sangria/react';
 
 export const SangriaReadings = new SangriaReact<Reading>('readings', 10000);
 
-/**
- * {
-    book: string;
-    startPage: number;
-    startTime: number;
-    endTime: number;
-    endPage: number;
-  }
- */
-export const readingAvroType = avro.Type.forSchema({
+export const readingSchema = avro.Type.forSchema({
   type: 'record',
-  name: 'Pet',
+  name: 'Reading',
   fields: [
     { name: 'book', type: 'string' },
     { name: 'startPage', type: 'int' },
