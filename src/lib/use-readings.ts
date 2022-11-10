@@ -2,7 +2,7 @@ import avro from 'avsc';
 import { Reading } from '../types';
 import { SangriaReact } from './sangria/react';
 
-export const SangriaReadings = new SangriaReact<Reading>('readings', 10000);
+export const SangriaReadings = new SangriaReact<Reading>('readings', 1000000);
 
 /**
  * {
