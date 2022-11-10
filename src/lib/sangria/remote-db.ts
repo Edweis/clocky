@@ -44,3 +44,18 @@ export const setRemoteDb = async <T>(path: string, db: T[]) => {
   );
   return object.ETag;
 };
+
+export const setRemoteDbRaw = async <T>(path: string, data: Buffer) => {
+  const credentials = await Auth.currentCredentials();
+  const s3 = new S3Client({ credentials, region: REGION });
+  const sub = credentials.identityId;
+  const key = `${REMOTE_DB_BASE}/${sub}/${path}`;
+  const object = await s3.send(
+    new PutObjectCommand({
+      Bucket: BUCKET,
+      Key: key,
+      Body: data,
+    }),
+  );
+  return object.ETag;
+};

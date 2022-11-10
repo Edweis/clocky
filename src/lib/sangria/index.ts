@@ -1,16 +1,18 @@
+import { readingAvroType } from '../use-readings';
 import { safeJsonParse, setEagerInterval } from './helpers';
-import { getRemoteDb, setRemoteDb } from './remote-db';
+import { getRemoteDb, setRemoteDb, setRemoteDbRaw } from './remote-db';
 import Subscriber from './subscriber';
+
 // eslint-disable-next-line
 const cache = new Map<string, Sangria<unknown>>();
 
 export default class Sangria<T> extends Subscriber<T> {
   private path: string;
 
-  constructor(path: string, period: number) {
+  constructor(path: string, refreshIntervalInMs: number) {
     super();
     this.path = `sangria-${path}`;
-    setEagerInterval(this.path, () => this.syncRemote(), period);
+    setEagerInterval(this.path, () => this.syncRemote(), refreshIntervalInMs);
   }
 
   // CRUD
@@ -38,11 +40,19 @@ export default class Sangria<T> extends Subscriber<T> {
       console.error('Failed safe:', error);
       return [];
     });
+
     const localData = this.get();
-    const currentVersion = localData.length;
-    const nextVersion = remoteData.length;
-    console.log({ currentVersion, nextVersion });
-    if (nextVersion < currentVersion) await setRemoteDb(this.path, localData);
-    if (currentVersion < nextVersion) this.setLocal(remoteData);
+    const localVersion = localData.length;
+    const remoteVersion = remoteData.length;
+    console.log({ localVersion, remoteVersion });
+    if (remoteVersion < localVersion) {
+      console.log('XXXXXX');
+      await setRemoteDb(this.path, localData);
+      const avroFile = Buffer.concat(
+        localData.map((r) => readingAvroType.toBuffer(r)),
+      );
+      await setRemoteDbRaw(`${this.path}.avro`, avroFile);
+    }
+    if (localVersion < remoteVersion) this.setLocal(remoteData);
   }
 }
