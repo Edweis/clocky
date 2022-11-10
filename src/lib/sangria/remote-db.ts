@@ -21,22 +21,15 @@ const BUCKET = import.meta.env.PROD
 const REMOTE_DB_BASE = 'users';
 export const getRemoteDb = async <T>(path: string) => {
   const credentials = await Auth.currentCredentials();
-  console.log({
-    credentials,
-    currentSession: await Auth.currentSession(),
-    user: await Auth.currentUserInfo(),
-  });
   const s3 = new S3Client({ credentials, region: REGION });
   const sub = credentials.identityId;
   const key = `${REMOTE_DB_BASE}/${sub}/${path}`;
   const object = await s3.send(
     new GetObjectCommand({ Bucket: BUCKET, Key: key }),
   );
-  console.log('getRemoteDb', object, typeof object);
   const stream = object.Body as ReadableStream;
   const reader = await stream.getReader().read();
   const buffer = toBuffer(reader.value);
-  console.log({ buffer, 'object.Body': object.Body, reader });
   return buffer;
 };
 
